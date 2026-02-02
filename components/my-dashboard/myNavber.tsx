@@ -4,8 +4,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Bell } from "lucide-react"
+import { usePathname } from "next/navigation"
 
 export default function MyNavber() {
+  const pathname = usePathname();
+  const isProvider = pathname.startsWith("/provider");
+
   return (
     <header className="flex h-20 items-center gap-4 bg-white px-6 w-full ">
 
@@ -28,7 +32,7 @@ export default function MyNavber() {
         <div className="flex items-center gap-3">
           <div className="text-right hidden sm:block">
             <p className="text-sm font-bold text-foreground leading-none mb-1">Rasel Parvez</p>
-            <p className="text-xs text-muted-foreground font-medium">Client</p>
+            <p className="text-xs text-muted-foreground font-medium">{isProvider ? "Provider" : "Client"}</p>
           </div>
           <Avatar className="h-11 w-11 rounded-xl border border-border/50">
             <AvatarImage src="https://github.com/shadcn.png" alt="Rasel Parvez" />

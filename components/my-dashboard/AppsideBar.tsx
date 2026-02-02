@@ -14,6 +14,7 @@ import {
 import { motion } from "framer-motion";
 import {
   Calendar,
+  ClockAlert,
   LayoutDashboard,
   LogOut,
   MessageSquare,
@@ -25,7 +26,7 @@ import {
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
-const menuItems = [
+const clientMenuItems = [
   { name: "Dashboard", path: "/my-dashboard", icon: LayoutDashboard },
   { name: "Find Provider", path: "/my-dashboard/providers", icon: Search },
   { name: "My Appointments", path: "/my-dashboard/appointments", icon: Calendar },
@@ -34,13 +35,26 @@ const menuItems = [
   { name: "My Profile", path: "/my-dashboard/profile", icon: User },
 ];
 
+const providerMenuItems = [
+  { name: "Overview", path: "/provider", icon: LayoutDashboard },
+  { name: "Appointments", path: "/provider/appointments", icon: Calendar },
+  { name: "Clients", path: "/provider/clients", icon: Users },
+  { name: "Availability", path: "/provider/availability", icon: ClockAlert },
+  { name: "Billing", path: "/provider/billing", icon: Receipt },
+  { name: "Messages", path: "/provider/messages", icon: MessageSquare },
+  { name: "Profile", path: "/provider/profile", icon: User },
+];
+
 export default function AppSideBar() {
   const pathname = usePathname();
   const router = useRouter();
 
+  const isProviderPath = pathname.startsWith("/provider");
+  const menuItems = isProviderPath ? providerMenuItems : clientMenuItems;
+
   // Helper to determine active state
   const isActive = (path: string) => {
-    if (path === "/my-dashboard") {
+    if (path === "/my-dashboard" || path === "/provider") {
       return pathname === path;
     }
     return pathname === path || pathname.startsWith(`${path}/`);
@@ -70,7 +84,6 @@ export default function AppSideBar() {
             </span>
           </Link>
         </SidebarHeader>
-
         {/* Navigation */}
         <SidebarGroup className="flex-1 px-0 mt-8">
           <SidebarGroupContent>
