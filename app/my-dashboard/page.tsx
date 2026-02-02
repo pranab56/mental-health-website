@@ -43,7 +43,7 @@ const notifications = [
 
 export default function DashboardPage() {
   return (
-    <div className="space-y-8 py-4">
+    <div className="space-y-8 py-4">  
 
       {/* Top Action Buttons */}
       <div className="flex flex-wrap gap-6 items-center px-5 py-3 bg-white rounded-2xl">

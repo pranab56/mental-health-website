@@ -38,8 +38,13 @@ export default function AppSideBar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Helper to determine active state - simple exact match for now or startsWith
-  const isActive = (path: string) => pathname === path || pathname.startsWith(`${path}/`);
+  // Helper to determine active state
+  const isActive = (path: string) => {
+    if (path === "/my-dashboard") {
+      return pathname === path;
+    }
+    return pathname === path || pathname.startsWith(`${path}/`);
+  };
 
   const handleLogout = () => {
     router.push("/logout");
