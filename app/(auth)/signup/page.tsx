@@ -15,6 +15,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Eye, EyeOff } from "lucide-react";
 import Image from 'next/image';
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
 import { useState } from "react";
 
 export default function SignUp() {
@@ -32,6 +33,7 @@ export default function SignUp() {
     terms?: string;
   }>({});
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -82,6 +84,11 @@ export default function SignUp() {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
       console.log("Sign up with:", { email, password, accountType });
+      if (accountType === "client") {
+        router.push("/signup/client-document");
+      } else {
+        router.push("/signup/provider-document");
+      }
     } catch (error) {
       console.error("Sign up error:", error);
     } finally {
@@ -288,6 +295,6 @@ export default function SignUp() {
           </motion.div>
         </div>
       </motion.div>
-    </div> 
+    </div>
   );
 }
