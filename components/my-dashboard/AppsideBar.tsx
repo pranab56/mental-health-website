@@ -27,18 +27,12 @@ import {
   User,
   Users
 } from "lucide-react";
+import Image from 'next/image';
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-type MenuItem = {
-  name: string;
-  path: string;
-  icon: any;
-  children?: { name: string; path: string }[];
-};
-
-const clientMenuItems: MenuItem[] = [
+const clientMenuItems = [
   { name: "Dashboard", path: "/my-dashboard", icon: LayoutDashboard },
   { name: "Find Provider", path: "/my-dashboard/providers", icon: Search },
   { name: "My Appointments", path: "/my-dashboard/appointments", icon: Calendar },
@@ -47,7 +41,7 @@ const clientMenuItems: MenuItem[] = [
   { name: "My Profile", path: "/my-dashboard/profile", icon: User },
 ];
 
-const providerMenuItems: MenuItem[] = [
+const providerMenuItems = [
   { name: "Overview", path: "/provider", icon: LayoutDashboard },
   {
     name: "Appointments",
@@ -111,17 +105,7 @@ export default function AppSideBar() {
         {/* LOGO Header */}
         <SidebarHeader className="p-8 pb-4">
           <Link href="/" className="flex items-center gap-3">
-            <div className="relative flex items-center justify-center">
-              {/* Icon placeholder matching the image - Two figures/Users */}
-              <Users className="w-10 h-10 text-[#6d4cba]" />
-              {/* The icon in the image is purple-ish, fitting the 'secondary' theme color likely */}
-              <div className="absolute -top-1 -right-1">
-                <MessageSquare className="w-4 h-4 text-white fill-white stroke-none" style={{ transform: 'scaleX(-1)' }} />
-              </div>
-            </div>
-            <span className="text-xl font-bold tracking-tight text-white">
-              Mynder Therapy
-            </span>
+            <Image src="/icons/Logo.png" alt="Logo" width={1000} height={1000} className="w-full h-20" />
           </Link>
         </SidebarHeader>
         {/* Navigation */}

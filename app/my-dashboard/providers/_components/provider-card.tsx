@@ -32,9 +32,9 @@ export function ProviderCard({ provider }: ProviderCardProps) {
       transition={{ duration: 0.3 }}
     >
       <Card className="overflow-hidden border-none shadow-sm hover:shadow-md transition-shadow">
-        <CardContent className="p-5">
-          <div className="flex gap-4 mb-4">
-            <div className="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
+        <CardContent className="p-4 sm:p-5">
+          <div className="flex gap-3 sm:gap-4 mb-4">
+            <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden flex-shrink-0 border border-gray-100">
               <Image
                 src={provider.image}
                 alt={provider.name}

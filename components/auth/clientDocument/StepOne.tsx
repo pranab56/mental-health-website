@@ -1,8 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { User } from "lucide-react";
-import { Input, Label, pageAnim, SectionHeader, SelectDropdown } from "./FormPrimitives";
+import { Input, Label, SectionHeader, SelectDropdown } from "./FormPrimitives";
 
 export default function StepOne({ data, setData, errors }: { data: any, setData: any, errors: Record<string, string> }) {
   const set = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => setData((d: any) => ({ ...d, [key]: e.target.value }));
@@ -19,7 +18,7 @@ export default function StepOne({ data, setData, errors }: { data: any, setData:
   };
 
   return (
-    <motion.div key="profile" {...pageAnim}>
+    <div key="profile">
       {/* Photo */}
       <div className="bg-gray-50 rounded-xl border border-gray-100 p-4 flex items-center gap-4 mb-5">
         <div className="relative w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center shrink-0 overflow-hidden border border-gray-100 shadow-sm">
@@ -86,6 +85,6 @@ export default function StepOne({ data, setData, errors }: { data: any, setData:
         <div><Label>Zip Code</Label><Input value={data.zip} onChange={set("zip")} placeholder="62704" error={errors.zip} /></div>
         <div><Label>Country</Label><Input value={data.country} onChange={set("country")} placeholder="United States" error={errors.country} /></div>
       </div>
-    </motion.div>
+    </div>
   );
 }

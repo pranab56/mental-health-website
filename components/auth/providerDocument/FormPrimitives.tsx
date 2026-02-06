@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatePresence, HTMLMotionProps, motion } from "framer-motion";
 import { useState } from "react";
 
 /* ─────────────────────── utility ────────────────────────────────────────── */
@@ -20,7 +19,7 @@ export function Label({ children, className }: { children: React.ReactNode; clas
 export function ErrorMessage({ message }: { message?: string }) {
   if (!message) return null;
   return (
-    <p className="text-[10px] text-red-500 mt-1 font-medium animate-in fade-in slide-in-from-top-1">
+    <p className="text-[10px] text-red-500 mt-1 font-medium">
       {message}
     </p>
   );
@@ -125,28 +124,22 @@ export function Dropdown({
         <Chevron open={open} />
       </button>
       <ErrorMessage message={error} />
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -6, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -6, scale: 0.97 }}
-            transition={{ duration: 0.18 }}
-            className="absolute z-30 mt-1 w-full max-h-52 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg"
-          >
-            {options.map((o) => (
-              <button
-                key={o}
-                type="button"
-                onClick={() => { onChange(o); setOpen(false); }}
-                className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-violet-50 hover:text-primary transition-colors"
-              >
-                {o}
-              </button>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {open && (
+        <div
+          className="absolute z-30 mt-1 w-full max-h-52 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg"
+        >
+          {options.map((o) => (
+            <button
+              key={o}
+              type="button"
+              onClick={() => { onChange(o); setOpen(false); }}
+              className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-violet-50 hover:text-primary transition-colors"
+            >
+              {o}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -201,13 +194,6 @@ export function DocUploadIcon() {
     </svg>
   );
 }
-
-export const PA: HTMLMotionProps<"div"> = {
-  initial: { opacity: 0, x: 22 },
-  animate: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: -22 },
-  transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] },
-};
 
 /* ─────────────────────── Constants ──────────────────────────────────────── */
 export const STATE_LIST = [

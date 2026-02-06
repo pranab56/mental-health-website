@@ -57,11 +57,11 @@ export default function ClientsPage() {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="space-y-8 p-1"
+      className="space-y-6"
     >
       {/* Search and Filter Header */}
       <Card className="border-none shadow-sm bg-white">
-        <CardContent className="p-6">
+        <CardContent className="p-4 sm:p-6">
           <div className="flex flex-col md:flex-row gap-4 items-center">
             <div className="relative flex-1 w-full">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
@@ -79,14 +79,14 @@ export default function ClientsPage() {
       </Card>
 
       {/* Stats and Sort */}
-      <div className="flex flex-col sm:row items-center justify-between gap-4">
-        <p className="text-[#64748b] font-medium text-lg">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-1">
+        <p className="text-[#64748b] font-medium text-base sm:text-lg text-center sm:text-left">
           Showing <span className="font-bold text-[#1e293b]">128</span> clients in your area
         </p>
-        <div className="flex items-center gap-3">
-          <span className="text-[#64748b] font-medium">Sort by:</span>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <span className="text-[#64748b] font-medium text-sm sm:text-base whitespace-nowrap">Sort by:</span>
           <Select defaultValue="highest">
-            <SelectTrigger className="w-[180px] h-10 border-none bg-transparent shadow-none font-bold text-[#1e293b] focus:ring-0">
+            <SelectTrigger className="w-[140px] sm:w-[180px] h-10 border-none bg-transparent shadow-none font-bold text-[#1e293b] focus:ring-0 text-sm sm:text-base">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent className="rounded-xl border-slate-100">
@@ -103,15 +103,15 @@ export default function ClientsPage() {
         {clients.map((client) => (
           <motion.div key={client.id} variants={itemVariants}>
             <Card className="border-none shadow-sm overflow-hidden bg-white hover:shadow-md transition-shadow">
-              <CardContent className="p-8">
-                <div className="flex gap-4 mb-6">
-                  <Avatar className="h-20 w-20 rounded-2xl">
-                    <AvatarFallback className="bg-[#EDF7F7] text-[#6BB9BA] font-bold text-2xl rounded-2xl">
+              <CardContent className="p-5 sm:p-8">
+                <div className="flex gap-3 sm:gap-4 mb-6">
+                  <Avatar className="h-16 w-16 sm:h-20 sm:w-20 rounded-xl sm:rounded-2xl">
+                    <AvatarFallback className="bg-[#EDF7F7] text-[#6BB9BA] font-bold text-xl sm:text-2xl rounded-xl sm:rounded-2xl">
                       {client.initials}
                     </AvatarFallback>
                   </Avatar>
                   <div className="space-y-1">
-                    <h3 className="text-xl font-bold text-[#1e293b]">{client.name}</h3>
+                    <h3 className="text-lg sm:text-xl font-bold text-[#1e293b]">{client.name}</h3>
                     <p className="text-[#9B85C1] font-bold text-sm">
                       Age:{client.age} / {client.gender}
                     </p>
@@ -150,27 +150,27 @@ export default function ClientsPage() {
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-center gap-2 py-8">
-        <Button variant="ghost" size="icon" className="rounded-full h-12 w-12 bg-white shadow-sm text-slate-400 hover:bg-slate-50">
-          <ChevronLeft className="w-6 h-6" />
+      <div className="flex flex-wrap items-center justify-center gap-2 py-8">
+        <Button variant="ghost" size="icon" className="rounded-full h-10 w-10 sm:h-12 sm:w-12 bg-white shadow-sm text-slate-400 hover:bg-slate-50 shrink-0">
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </Button>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           {[1, 2, 3, "...", 12].map((page, i) => (
             <Button
               key={i}
               variant={activePage === page ? "default" : "ghost"}
               onClick={() => typeof page === "number" && setActivePage(page)}
-              className={`h-12 w-12 rounded-full font-bold text-lg transition-all ${activePage === page
-                  ? "bg-[#6BB9BA] text-white hover:bg-[#5aa8a9]"
-                  : "text-[#64748b] hover:bg-white hover:shadow-sm"
+              className={`h-9 w-9 sm:h-12 sm:w-12 rounded-full font-bold text-base sm:text-lg transition-all p-0 shrink-0 ${activePage === page
+                ? "bg-[#6BB9BA] text-white hover:bg-[#5aa8a9]"
+                : "text-[#64748b] hover:bg-white hover:shadow-sm"
                 }`}
             >
               {page}
             </Button>
           ))}
         </div>
-        <Button variant="ghost" size="icon" className="rounded-full h-12 w-12 bg-white shadow-sm text-slate-400 hover:bg-slate-50">
-          <ChevronRight className="w-6 h-6" />
+        <Button variant="ghost" size="icon" className="rounded-full h-10 w-10 sm:h-12 sm:w-12 bg-white shadow-sm text-slate-400 hover:bg-slate-50 shrink-0">
+          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
         </Button>
       </div>
     </motion.div>

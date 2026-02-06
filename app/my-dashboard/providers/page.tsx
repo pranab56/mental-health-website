@@ -166,7 +166,7 @@ export default function ProvidersPage() {
   }, [searchQuery, sortBy, filters]);
 
   return (
-    <div className="py-4 px-4">
+    <div className="">
       <SearchFilters
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -175,15 +175,15 @@ export default function ProvidersPage() {
       />
 
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-        <div>
-          <h2 className="text-xl font-medium text-muted-foreground">
+        <div className="order-2 md:order-1">
+          <h2 className="text-lg md:text-xl font-medium text-muted-foreground">
             Showing <span className="font-bold text-foreground">{filteredProviders.length}</span> therapists in your area
           </h2>
         </div>
-        <div className="flex items-center gap-3">
-          <span className="text-muted-foreground font-medium">Sort by:</span>
+        <div className="flex items-center gap-3 order-1 md:order-2 w-full md:w-auto justify-between md:justify-end">
+          <span className="text-muted-foreground font-medium whitespace-nowrap">Sort by:</span>
           <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-[180px] bg-transparent border-none shadow-none font-bold text-foreground focus:ring-0 cursor-pointer">
+            <SelectTrigger className="w-full md:w-[180px] bg-transparent border-none shadow-none font-bold text-foreground focus:ring-0 cursor-pointer text-right md:text-left">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
@@ -197,7 +197,7 @@ export default function ProvidersPage() {
       </div>
 
       {filteredProviders.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-12">
           {filteredProviders.map((provider) => (
             <ProviderCard key={provider.id} provider={provider} />
           ))}

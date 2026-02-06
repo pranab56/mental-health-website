@@ -1,11 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
 import {
   Dropdown,
   Input,
   Label,
-  PA,
   Section,
   UploadIcon,
   VideoUploadIcon
@@ -26,7 +24,7 @@ export default function StepOne({ d, s, errors }: { d: any, s: any, errors: Reco
   };
 
   return (
-    <motion.div {...PA}>
+    <div key="step1">
       {/* Photo card */}
       <div className="bg-gray-50 rounded-xl border border-gray-100 p-4 flex items-center gap-4 mb-4">
         <div className="relative w-14 h-14 rounded-full bg-gray-200 border border-gray-100 flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
@@ -127,6 +125,6 @@ export default function StepOne({ d, s, errors }: { d: any, s: any, errors: Reco
           </div>
         </div>
       </Section>
-    </motion.div>
+    </div>
   );
 }

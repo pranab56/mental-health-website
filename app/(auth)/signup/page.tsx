@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -11,12 +10,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 import { ArrowRight, Eye, EyeOff } from "lucide-react";
 import Image from 'next/image';
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -35,12 +35,7 @@ export default function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const validateForm = () => {
+  const validate = () => {
     const newErrors: {
       email?: string;
       password?: string;
@@ -49,9 +44,9 @@ export default function SignUp() {
     } = {};
 
     if (!email) {
-      newErrors.email = "Email is required";
-    } else if (!validateEmail(email)) {
-      newErrors.email = "Please enter a valid email";
+      newErrors.email = "Email address is required";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Please enter a valid email address";
     }
 
     if (!password) {
@@ -72,18 +67,19 @@ export default function SignUp() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!validateForm()) {
+    if (!validate()) {
       return;
     }
 
     setIsLoading(true);
     try {
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1500));
       console.log("Sign up with:", { email, password, accountType });
+      toast.success("Account created successfully!");
       if (accountType === "client") {
         router.push("/signup/client-document");
       } else {
@@ -91,104 +87,72 @@ export default function SignUp() {
       }
     } catch (error) {
       console.error("Sign up error:", error);
+      toast.error("An error occurred during sign up.");
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleGoogleSignup = () => {
-    console.log("Google sign up");
-  };
-
   return (
-    <div className="h-screen flex overflow-hidden container mx-auto">
-      {/* Left Panel - Branding */}
-      <motion.div
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6 }}
-        className="hidden lg:flex lg:w-1/2 relative m-4 overflow-hidden"
-      >
-        <Image
-          src="/images/auth/login.png"
-          alt="Logo"
-          width={1000}
-          height={1000}
-          className="w-full h-full "
-        />
-      </motion.div>
+    <div className="flex min-h-screen bg-white font-sans">
+      {/* Left Panel - Feature Showcase */}
+      <div className="hidden lg:flex lg:w-1/2 bg-[#F9FAFB] relative flex-col justify-between p-12 overflow-hidden items-center justify-center">
+        <div className='w-10/12 h-12/12 relative'>
+          <Image src="/images/auth/login.png" alt="Signup Background" fill className="" />
+        </div>
+      </div>
 
       {/* Right Panel - SignUp Form */}
-      <motion.div
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6 }}
-        className="w-full lg:w-5/12 flex items-center justify-center"
-      >
-        <div className="w-full px-8 md:px-16 py-8 bg-white flex flex-col justify-center rounded-xl shadow-lg max-h-[95vh] overflow-y-auto custom-scrollbar">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-          >
-            <h2 className="text-3xl font-bold text-center text-gray-900 mb-2">
+      <div className="flex-1 flex items-center justify-center p-4 sm:p-8 bg-white ">
+        <div className="w-full max-w-[520px] p-6 sm:p-10 bg-white rounded-3xl shadow-none sm:shadow-xl border border-gray-100 sm:border-none">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
               Create your account
             </h2>
-            <p className="text-gray-600 mb-6 text-center text-sm">
-              Enter your details to get started as a service provider.
+            <p className="text-sm sm:text-base text-gray-500">
+              Enter your details to get started.
             </p>
+          </div>
 
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+            <div className='space-y-2 w-full'>
+              <label className="text-sm font-semibold text-gray-700">Account Type</label>
+              <Select value={accountType} onValueChange={setAccountType}>
+                <SelectTrigger className="h-12 bg-[#F9FAFB] border-none w-full py-6 rounded-xl focus:ring-1 focus:ring-[#9B85C1] transition-all">
+                  <SelectValue placeholder="Select account type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="client">I am Client</SelectItem>
+                  <SelectItem value="provider">I am Provider</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-            {/* Signup Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className='w-full'>
-                <Label className="text-sm font-medium text-gray-700 mb-1.5 block">
-                  Account Type
-                </Label>
-                <Select value={accountType} onValueChange={setAccountType}>
-                  <SelectTrigger className="h-11 border-gray-200 rounded-lg bg-gray-50/50 py-5 w-full">
-                    <SelectValue placeholder="Select account type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="client">I am Client</SelectItem>
-                    <SelectItem value="provider">I am Provider</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <Label
-                  htmlFor="email"
-                  className="text-sm font-medium text-gray-700 mb-1.5 block"
-                >
-                  Work Email
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="name@company.com"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    if (errors.email) setErrors({ ...errors, email: undefined });
-                  }}
-                  className={`h-11 border-gray-200 rounded-lg bg-gray-50/50 ${errors.email ? "border-red-500 focus-visible:ring-red-500" : ""}`}
-                />
-                {errors.email && (
-                  <p className="text-red-500 text-[10px] mt-1">{errors.email}</p>
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-gray-700">Work Email</label>
+              <Input
+                type="email"
+                placeholder="name@company.com"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (errors.email) setErrors({ ...errors, email: undefined });
+                }}
+                className={cn(
+                  "h-12 bg-[#F9FAFB] border-none rounded-xl focus-visible:ring-1 transition-all",
+                  errors.email ? "focus-visible:ring-red-500 bg-red-50/50" : "focus-visible:ring-[#9B85C1]"
                 )}
-              </div>
+              />
+              {errors.email && (
+                <p className="text-xs font-medium text-red-500 mt-1 ml-1">{errors.email}</p>
+              )}
+            </div>
 
-              <div>
-                <Label
-                  htmlFor="password"
-                  className="text-sm font-medium text-gray-700 mb-1.5 block"
-                >
-                  Password
-                </Label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-gray-700">Password</label>
                 <div className="relative">
                   <Input
-                    id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="Min. 8 characters"
                     value={password}
@@ -196,105 +160,99 @@ export default function SignUp() {
                       setPassword(e.target.value);
                       if (errors.password) setErrors({ ...errors, password: undefined });
                     }}
-                    className={`h-11 pr-10 border-gray-200 rounded-lg bg-gray-50/50 ${errors.password ? "border-red-500 focus-visible:ring-red-500" : ""}`}
+                    className={cn(
+                      "h-12 bg-[#F9FAFB] border-none rounded-xl focus-visible:ring-1 transition-all pr-10",
+                      errors.password ? "focus-visible:ring-red-500 bg-red-50/50" : "focus-visible:ring-[#9B85C1]"
+                    )}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-red-500 text-[10px] mt-1">{errors.password}</p>
+                  <p className="text-xs font-medium text-red-500 mt-1 ml-1">{errors.password}</p>
                 )}
               </div>
 
-              <div>
-                <Label
-                  htmlFor="confirmPassword"
-                  className="text-sm font-medium text-gray-700 mb-1.5 block"
-                >
-                  Confirm Password
-                </Label>
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-gray-700">Confirm Password</label>
                 <div className="relative">
                   <Input
-                    id="confirmPassword"
                     type={showConfirmPassword ? "text" : "password"}
-                    placeholder="Repeat your password"
+                    placeholder="Repeat password"
                     value={confirmPassword}
                     onChange={(e) => {
                       setConfirmPassword(e.target.value);
                       if (errors.confirmPassword) setErrors({ ...errors, confirmPassword: undefined });
                     }}
-                    className={`h-11 pr-10 border-gray-200 rounded-lg bg-gray-50/50 ${errors.confirmPassword ? "border-red-500 focus-visible:ring-red-500" : ""}`}
+                    className={cn(
+                      "h-12 bg-[#F9FAFB] border-none rounded-xl focus-visible:ring-1 transition-all pr-10",
+                      errors.confirmPassword ? "focus-visible:ring-red-500 bg-red-50/50" : "focus-visible:ring-[#9B85C1]"
+                    )}
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
                   >
                     {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
                 {errors.confirmPassword && (
-                  <p className="text-red-500 text-[10px] mt-1">{errors.confirmPassword}</p>
+                  <p className="text-xs font-medium text-red-500 mt-1 ml-1">{errors.confirmPassword}</p>
                 )}
               </div>
+            </div>
 
-              <div className="flex items-start space-x-2 pt-1">
-                <Checkbox
-                  id="terms"
-                  checked={agreeTerms}
-                  onCheckedChange={(checked) => {
-                    setAgreeTerms(checked as boolean);
-                    if (errors.terms) setErrors({ ...errors, terms: undefined });
-                  }}
-                  className="mt-1 border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-                />
-                <Label
-                  htmlFor="terms"
-                  className="text-[11px] text-gray-500 leading-tight font-normal cursor-pointer"
-                >
-                  I agree to the <Link href="/terms" className="text-purple-600 hover:underline">Terms of Service</Link> and <Link href="/privacy" className="text-purple-600 hover:underline">Privacy Policy</Link>.
-                </Label>
-              </div>
-              {errors.terms && (
-                <p className="text-red-500 text-[10px]">{errors.terms}</p>
+            <div className="flex items-start space-x-2 pt-2">
+              <Checkbox
+                id="terms"
+                checked={agreeTerms}
+                onCheckedChange={(checked) => {
+                  setAgreeTerms(checked as boolean);
+                  if (errors.terms) setErrors({ ...errors, terms: undefined });
+                }}
+                className="mt-1 border-gray-300 data-[state=checked]:bg-[#9B85C1] data-[state=checked]:border-[#9B85C1]"
+              />
+              <label
+                htmlFor="terms"
+                className="text-xs text-gray-500 leading-tight font-normal cursor-pointer"
+              >
+                I agree to the <Link href="/terms" className="text-[#9B85C1] hover:underline font-medium">Terms of Service</Link> and <Link href="/privacy" className="text-[#9B85C1] hover:underline font-medium">Privacy Policy</Link>.
+              </label>
+            </div>
+            {errors.terms && (
+              <p className="text-xs font-medium text-red-500">{errors.terms}</p>
+            )}
+
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full h-12 bg-[#9B85C1] hover:bg-[#8A74B0] text-white rounded-xl text-base font-medium transition-all shadow-md group mt-2"
+            >
+              {isLoading ? 'Creating Account...' : (
+                <span className="flex items-center gap-2">
+                  Create Account <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </span>
               )}
+            </Button>
+          </form>
 
-              <Button
-                type="submit"
-                className="w-full h-11 bg-primary cursor-pointer hover:bg-primary/80 text-white font-medium text-sm rounded-lg mt-2"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <div className="flex items-center justify-center">
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                    Processing...
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center">
-                    Create Account
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </div>
-                )}
-              </Button>
-            </form>
-
-            <p className="text-center text-gray-500 text-sm mt-6">
-              Already have an account?{" "}
-              <Link
-                href="/login"
-                className="text-action cursor-pointer hover:text-action/80 font-semibold"
-              >
-                Login
-              </Link>
-            </p>
-          </motion.div>
+          <p className="text-center text-gray-500 text-sm mt-8">
+            Already have an account?{" "}
+            <Link
+              href="/login"
+              className="text-[#5aa8a9] hover:text-[#4a8a8b] font-semibold"
+            >
+              Login
+            </Link>
+          </p>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

@@ -61,24 +61,24 @@ export function SearchFilters({
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 mb-5 bg-white px-3 py-3 rounded-2xl">
-      <div className="relative w-full md:w-5/12">
+    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 bg-white p-3 rounded-2xl shadow-sm border border-gray-50">
+      <div className="relative flex-1">
         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
-          <Search size={20} />
+          <Search size={18} />
         </div>
         <Input
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          placeholder="Search by name or specialty (e.g. Anxiety, CBT) ..."
-          className="pl-12 h-13 border-none bg-[#F8F7FC] focus:bg-[#F1F0F7] transition-colors rounded-2xl text-base"
+          placeholder="Search by name or specialty..."
+          className="pl-11 h-12 md:h-13 border-none bg-background focus:bg-accent/50 transition-colors rounded-xl md:rounded-2xl text-sm md:text-base w-full"
         />
       </div>
 
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="secondary" className="bg-primary cursor-pointer hover:bg-primary/90 text-white h-13 px-8 rounded-2xl gap-2 font-medium">
-            <Filter size={20} />
-            Filter
+          <Button variant="secondary" className="bg-primary cursor-pointer hover:bg-primary/90 text-white h-12 md:h-13 px-6 md:px-8 rounded-xl md:rounded-2xl gap-2 font-semibold shadow-md shadow-primary/20 shrink-0">
+            <Filter size={18} />
+            <span>Filter</span>
           </Button>
         </SheetTrigger>
         <SheetContent className="w-full sm:max-w-md p-0 flex flex-col">

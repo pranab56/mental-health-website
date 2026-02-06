@@ -6,7 +6,6 @@ import StepFour from "@/components/auth/clientDocument/StepFour";
 import StepOne from "@/components/auth/clientDocument/StepOne";
 import StepThree from "@/components/auth/clientDocument/StepThree";
 import StepTwo from "@/components/auth/clientDocument/StepTwo";
-import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowLeft,
   Check
@@ -21,10 +20,9 @@ function ProgressBar({ current }: { current: number }) {
   return (
     <div className="mb-6">
       <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
-        <motion.div
-          className="h-full bg-primary rounded-full"
-          animate={{ width: `${pct}%` }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
+        <div
+          className="h-full bg-primary rounded-full transition-all duration-500 ease-in-out"
+          style={{ width: `${pct}%` }}
         />
       </div>
       <div className="flex justify-between mt-2.5">
@@ -32,7 +30,7 @@ function ProgressBar({ current }: { current: number }) {
           <span
             key={s}
             className={cn(
-              "text-[10px] sm:text-xs font-medium transition-colors duration-300",
+              "text-[9px] sm:text-xs font-medium transition-colors duration-300",
               i <= current ? "text-primary" : "text-gray-350"
             )}
           >
@@ -106,25 +104,25 @@ export default function ClientIntakeForm() {
   const goNext = () => {
     if (validateStep(step)) {
       setStep((s) => Math.min(s + 1, 4));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
-  const goBack = () => setStep((s) => Math.max(s - 1, 0));
+  const goBack = () => {
+    setStep((s) => Math.max(s - 1, 0));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handleSubmit = () => {
     if (validateStep(step)) {
       setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   if (submitted) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-        <motion.div
-          initial={{ scale: 0.88, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.45, ease: [0.34, 1.56, 0.64, 1] }}
-          className="bg-white rounded-2xl shadow-xl border border-gray-100 max-w-md w-full p-10 text-center"
-        >
+        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 max-w-md w-full p-8 sm:p-10 text-center">
           <div className="w-16 h-16 bg-violet-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <Check size={30} className="text-primary" />
           </div>
@@ -134,11 +132,11 @@ export default function ClientIntakeForm() {
           </p>
           <button
             onClick={() => { setSubmitted(false); setStep(0); setData(INITIAL); setErrors({}); }}
-            className="bg-primary text-white text-sm font-semibold px-6 py-2.5 rounded-lg hover:bg-primary/80 transition-colors"
+            className="bg-primary text-white text-sm font-semibold px-6 py-2.5 rounded-lg hover:bg-primary/80 transition-colors cursor-pointer"
           >
             Start Over
           </button>
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -152,33 +150,31 @@ export default function ClientIntakeForm() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-start justify-center p-4 pt-8 pb-12">
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 max-w-5xl mx-auto w-full p-5 sm:p-7 pb-6">
+    <div className="min-h-screen bg-gray-50 flex items-start justify-center p-3 sm:p-4 pt-6 sm:pt-10 pb-12">
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 max-w-5xl mx-auto w-full p-4 sm:p-8 pb-6 sm:pb-8">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start justify-between mb-4 gap-4">
+        <div className="flex flex-col sm:flex-row items-start justify-between mb-4 sm:mb-6 gap-3 sm:gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-gray-800">Client Intake Form</h1>
-            <p className="text-xs text-gray-400 mt-0.5">Please provide your personal and emergency contact information.</p>
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Client Intake Form</h1>
+            <p className="text-xs text-gray-400 mt-1">Please provide your personal and emergency contact information.</p>
           </div>
-          <span className="text-xs font-semibold text-primary bg-violet-50 px-2.5 py-1 rounded-full whitespace-nowrap">
+          <span className="text-[10px] sm:text-xs font-semibold text-primary bg-violet-50 px-3 py-1.5 rounded-full whitespace-nowrap">
             Step {step + 1} of 5: {STEPS[step]}
           </span>
         </div>
 
         {/* Progress */}
-        <div className="mt-4 mb-5">
+        <div className="mb-6 sm:mb-8">
           <ProgressBar current={step} />
         </div>
 
-        {/* Animated step content */}
-        <div className="min-h-[400px]">
-          <AnimatePresence mode="wait">
-            {stepComponents[step]}
-          </AnimatePresence>
+        {/* content area */}
+        <div className="min-h-[300px] sm:min-h-[400px]">
+          {stepComponents[step]}
         </div>
 
         {/* Footer nav */}
-        <div className="flex items-center justify-between mt-7 pt-4 border-t border-gray-100">
+        <div className="flex items-center justify-between mt-8 sm:mt-10 pt-5 sm:pt-6 border-t border-gray-100">
           <button
             onClick={goBack}
             disabled={step === 0}
@@ -187,11 +183,11 @@ export default function ClientIntakeForm() {
               step === 0 ? "text-gray-300 cursor-not-allowed" : "text-gray-600 hover:text-primary"
             )}
           >
-            <ArrowLeft size={15} /> Back
+            <ArrowLeft size={16} /> <span className="hidden sm:inline">Back</span>
           </button>
           <button
             onClick={step === 4 ? handleSubmit : goNext}
-            className="bg-primary hover:bg-primary/80 cursor-pointer active:scale-95 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-all duration-150 shadow-sm shadow-violet-200"
+            className="bg-primary hover:bg-primary/80 cursor-pointer text-white text-sm font-semibold px-6 py-3 rounded-xl transition-all duration-150 shadow-md shadow-violet-100 active:scale-95"
           >
             {step === 4 ? "Save & Submit" : "Save & Continue"}
           </button>

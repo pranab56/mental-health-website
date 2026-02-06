@@ -1,6 +1,5 @@
 "use client";
 
-import { HTMLMotionProps, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
@@ -21,7 +20,7 @@ export function Label({ children, className }: { children: React.ReactNode; clas
 export function ErrorMessage({ message }: { message?: string }) {
   if (!message) return null;
   return (
-    <p className="text-[10px] text-red-500 mt-1 font-medium animate-in fade-in slide-in-from-top-1">
+    <p className="text-[10px] text-red-500 mt-1 font-medium">
       {message}
     </p>
   );
@@ -137,10 +136,7 @@ export function SelectDropdown({
         <ChevronDown size={15} className={cn("text-gray-400 transition-transform duration-200", open && "rotate-180")} />
       </button>
       {open && (
-        <motion.div
-          initial={{ opacity: 0, y: -6 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -6 }}
+        <div
           className="absolute z-20 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden"
         >
           {options.map((o) => (
@@ -153,7 +149,7 @@ export function SelectDropdown({
               {o}
             </button>
           ))}
-        </motion.div>
+        </div>
       )}
       <ErrorMessage message={error} />
     </div>
@@ -163,10 +159,3 @@ export function SelectDropdown({
 export function SectionHeader({ children }: { children: React.ReactNode }) {
   return <p className="text-sm font-bold text-gray-800 mb-3">{children}</p>;
 }
-
-export const pageAnim: HTMLMotionProps<"div"> = {
-  initial: { opacity: 0, x: 18 },
-  animate: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: -18 },
-  transition: { duration: 0.32, ease: [0.4, 0, 0.2, 1] },
-};

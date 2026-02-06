@@ -1,12 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Label, pageAnim, Textarea } from "./FormPrimitives";
+import { Label, Textarea } from "./FormPrimitives";
 
 export default function StepFive({ data, setData, errors }: { data: any, setData: any, errors: Record<string, string> }) {
   const set = (key: string) => (e: React.ChangeEvent<HTMLTextAreaElement>) => setData((d: any) => ({ ...d, [key]: e.target.value }));
   return (
-    <motion.div key="concerns" {...pageAnim}>
+    <div key="concerns">
       <div className="bg-gray-50 rounded-xl border border-gray-100 p-4 mb-5">
         <p className="text-sm font-semibold text-gray-700 mb-1">Concerns & Goals</p>
         <p className="text-xs text-gray-400">
@@ -21,6 +20,6 @@ export default function StepFive({ data, setData, errors }: { data: any, setData
         <Label>Primary Goal</Label>
         <Textarea value={data.goal} onChange={set("goal")} placeholder="This has been affecting my sleep and my ability to focus at …" error={errors.goal} />
       </div>
-    </motion.div>
+    </div>
   );
 }

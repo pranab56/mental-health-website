@@ -2,12 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 import { ArrowLeft, ArrowRight, Eye, EyeOff } from "lucide-react";
 import Image from 'next/image';
 import Link from "next/link";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function ResetPassword() {
   const [password, setPassword] = useState("");
@@ -21,7 +21,7 @@ export default function ResetPassword() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const validateForm = () => {
+  const validate = () => {
     const newErrors: { password?: string; confirmPassword?: string } = {};
 
     if (!password) {
@@ -38,10 +38,10 @@ export default function ResetPassword() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!validateForm()) return;
+    if (!validate()) return;
 
     setIsLoading(true);
     try {
@@ -49,170 +49,140 @@ export default function ResetPassword() {
       await new Promise((resolve) => setTimeout(resolve, 1500));
       console.log("Password updated successfully");
       setIsSuccess(true);
+      toast.success("Password reset successful!");
     } catch (error) {
       console.error("Reset error:", error);
+      toast.error("An error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="h-screen flex overflow-hidden container mx-auto">
-      {/* Left Panel - Branding */}
-      <motion.div
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6 }}
-        className="hidden lg:flex lg:w-1/2 relative m-4 overflow-hidden"
-      >
-        <Image
-          src="/images/auth/login.png"
-          alt="Branding"
-          width={1000}
-          height={1000}
-          className="w-full h-full"
-        />
-      </motion.div>
+    <div className="flex min-h-screen bg-white font-sans">
+      {/* Left Panel - Feature Showcase */}
+      <div className="hidden lg:flex lg:w-1/2 bg-[#F9FAFB] relative flex-col justify-between p-12 overflow-hidden items-center justify-center">
+        <div className='w-10/12 h-12/12 relative'>
+          <Image src="/images/auth/login.png" alt="Reset Password Background" fill className="" />
+        </div>
+      </div>
 
       {/* Right Panel - Form */}
-      <motion.div
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6 }}
-        className="w-full lg:w-5/12 flex items-center justify-center p-4"
-      >
-        <div className="w-full px-8 md:px-16 py-12 bg-white flex flex-col justify-center rounded-xl shadow-lg border border-gray-100">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-          >
-            {isSuccess ? (
-              <div className="text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">Success!</h2>
-                <p className="text-gray-600 mb-8">
-                  Your password has been updated successfully. You can now log in with your new password.
-                </p>
-                <Link href="/login">
-                  <Button className="w-full h-12 bg-secondary cursor-pointer hover:bg-secondary/80 text-white font-medium rounded-lg">
-                    Proceed to Login
-                  </Button>
-                </Link>
+      <div className="flex-1 flex items-center justify-center p-4 sm:p-8 bg-white ">
+        <div className="w-full max-w-[480px] p-6 sm:p-10 bg-white rounded-3xl shadow-none sm:shadow-xl border border-gray-100 sm:border-none">
+          {isSuccess ? (
+            <div className="text-center">
+              <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg className="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                </svg>
               </div>
-            ) : (
-              <>
-                <h2 className="text-3xl font-bold text-center text-gray-900 mb-4">
-                  Create New Password
-                </h2>
-                <p className="text-gray-600 mb-10 text-center text-sm leading-relaxed">
-                  Please enter a new password for your account. Make sure it's at least 8 characters long and includes a mix of characters.
-                </p>
-
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <Label
-                      htmlFor="password"
-                      className="text-sm font-medium text-gray-700 mb-2 block"
-                    >
-                      Password
-                    </Label>
-                    <div className="relative">
-                      <Input
-                        id="password"
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Min. 8 characters"
-                        value={password}
-                        onChange={(e) => {
-                          setPassword(e.target.value);
-                          if (errors.password) setErrors({ ...errors, password: undefined });
-                        }}
-                        className={`h-12 pr-10 border-gray-200 rounded-lg bg-gray-50/50 ${errors.password ? "border-red-500 focus-visible:ring-red-500" : ""
-                          }`}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                      >
-                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                      </button>
-                    </div>
-                    {errors.password && (
-                      <p className="text-red-500 text-xs mt-1.5">{errors.password}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <Label
-                      htmlFor="confirmPassword"
-                      className="text-sm font-medium text-gray-700 mb-2 block"
-                    >
-                      Confirm Password
-                    </Label>
-                    <div className="relative">
-                      <Input
-                        id="confirmPassword"
-                        type={showConfirmPassword ? "text" : "password"}
-                        placeholder="Repeat your password"
-                        value={confirmPassword}
-                        onChange={(e) => {
-                          setConfirmPassword(e.target.value);
-                          if (errors.confirmPassword) setErrors({ ...errors, confirmPassword: undefined });
-                        }}
-                        className={`h-12 pr-10 border-gray-200 rounded-lg bg-gray-50/50 ${errors.confirmPassword ? "border-red-500 focus-visible:ring-red-500" : ""
-                          }`}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                      >
-                        {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                      </button>
-                    </div>
-                    {errors.confirmPassword && (
-                      <p className="text-red-500 text-xs mt-1.5">{errors.confirmPassword}</p>
-                    )}
-                  </div>
-
-                  <Button
-                    type="submit"
-                    className="w-full h-12 bg-primary cursor-pointer hover:bg-primary/80 text-white font-medium text-base rounded-lg shadow-sm transition-all"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? (
-                      <div className="flex items-center justify-center">
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                        Updating...
-                      </div>
-                    ) : (
-                      <div className="flex items-center justify-center">
-                        Update Password
-                        <ArrowRight className="w-5 h-5 ml-2" />
-                      </div>
-                    )}
-                  </Button>
-                </form>
-              </>
-            )}
-
-            <div className="mt-10 flex justify-center pt-6 border-t">
-              <Link
-                href="/login"
-                className="flex items-center text-sm font-medium text-teal-500 hover:text-teal-600 transition-colors"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Return to login
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Success!</h2>
+              <p className="text-sm sm:text-base text-gray-500 mb-8 leading-relaxed">
+                Your password has been updated successfully. You can now log in with your new password.
+              </p>
+              <Link href="/login">
+                <Button className="w-full h-12 bg-[#9B85C1] hover:bg-[#8A74B0] text-white rounded-xl text-base font-medium shadow-md transition-all">
+                  Proceed to Login
+                </Button>
               </Link>
             </div>
-          </motion.div>
+          ) : (
+            <>
+              <div className="text-center mb-10">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
+                  New Password
+                </h2>
+                <p className="text-sm sm:text-base text-gray-500 leading-relaxed">
+                  Please enter a new password for your account. Make sure it's secure.
+                </p>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-gray-700">New Password</label>
+                  <div className="relative">
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Min. 8 characters"
+                      value={password}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                        if (errors.password) setErrors({ ...errors, password: undefined });
+                      }}
+                      className={cn(
+                        "h-12 bg-[#F9FAFB] border-none rounded-xl focus-visible:ring-1 transition-all pr-10",
+                        errors.password ? "focus-visible:ring-red-500 bg-red-50/50" : "focus-visible:ring-[#9B85C1]"
+                      )}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
+                  {errors.password && (
+                    <p className="text-xs font-medium text-red-500 mt-1 ml-1">{errors.password}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-gray-700">Confirm Password</label>
+                  <div className="relative">
+                    <Input
+                      type={showConfirmPassword ? "text" : "password"}
+                      placeholder="Repeat your password"
+                      value={confirmPassword}
+                      onChange={(e) => {
+                        setConfirmPassword(e.target.value);
+                        if (errors.confirmPassword) setErrors({ ...errors, confirmPassword: undefined });
+                      }}
+                      className={cn(
+                        "h-12 bg-[#F9FAFB] border-none rounded-xl focus-visible:ring-1 transition-all pr-10",
+                        errors.confirmPassword ? "focus-visible:ring-red-500 bg-red-50/50" : "focus-visible:ring-[#9B85C1]"
+                      )}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                    >
+                      {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
+                  {errors.confirmPassword && (
+                    <p className="text-xs font-medium text-red-500 mt-1 ml-1">{errors.confirmPassword}</p>
+                  )}
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full h-12 bg-[#9B85C1] hover:bg-[#8A74B0] text-white rounded-xl text-base font-medium transition-all shadow-md group"
+                >
+                  {isLoading ? 'Updating...' : (
+                    <span className="flex items-center gap-2">
+                      Update Password <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  )}
+                </Button>
+              </form>
+            </>
+          )}
+
+          <div className="mt-10 flex justify-center pt-6 border-t border-gray-100">
+            <Link
+              href="/login"
+              className="flex items-center text-sm font-medium text-[#5aa8a9] hover:text-[#4a8a8b] transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Return to login
+            </Link>
+          </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

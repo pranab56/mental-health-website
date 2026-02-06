@@ -1,11 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from 'next/image';
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function VerifyEmail() {
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
@@ -43,7 +44,7 @@ export default function VerifyEmail() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const code = otp.join("");
     if (code.length < 6) return;
@@ -53,8 +54,10 @@ export default function VerifyEmail() {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
       console.log("Verifying OTP:", code);
+      toast.success("Email verified successfully!");
     } catch (error) {
       console.error("Verification error:", error);
+      toast.error("Invalid verification code.");
     } finally {
       setIsLoading(false);
     }
@@ -64,114 +67,92 @@ export default function VerifyEmail() {
     if (timer === 0) {
       setTimer(59);
       console.log("Resending OTP...");
+      toast.success("New code sent to your email!");
     }
   };
 
   return (
-    <div className="h-screen flex overflow-hidden container mx-auto">
-      {/* Left Panel - Branding */}
-      <motion.div
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6 }}
-        className="hidden lg:flex lg:w-1/2 relative m-4 overflow-hidden"
-      >
-        <Image
-          src="/images/auth/login.png"
-          alt="Branding"
-          width={1000}
-          height={1000}
-          className="w-full h-full"
-        />
-      </motion.div>
+    <div className="flex min-h-screen bg-white font-sans">
+      {/* Left Panel - Feature Showcase */}
+      <div className="hidden lg:flex lg:w-1/2 bg-[#F9FAFB] relative flex-col justify-between p-12 overflow-hidden items-center justify-center">
+        <div className='w-10/12 h-12/12 relative'>
+          <Image src="/images/auth/login.png" alt="Login Background" fill className="" />
+        </div>
+      </div>
 
       {/* Right Panel - Form */}
-      <motion.div
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6 }}
-        className="w-full lg:w-5/12 flex items-center justify-center p-4"
-      >
-        <div className="w-full px-8 md:px-16 py-12 bg-white flex flex-col justify-center rounded-xl shadow-lg border border-gray-100">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-          >
-            <h2 className="text-3xl font-bold text-center text-gray-900 mb-4">
+      <div className="flex-1 flex items-center justify-center p-4 sm:p-8 bg-white ">
+        <div className="w-full max-w-[480px] p-6 sm:p-10 bg-white rounded-3xl shadow-none sm:shadow-xl border border-gray-100 sm:border-none">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
               Verify Email
             </h2>
-            <p className="text-gray-600 mb-10 text-center text-sm leading-relaxed">
+            <p className="text-sm sm:text-base text-gray-500 leading-relaxed">
               Please enter the 6-digit verification code sent to your email.
             </p>
+          </div>
 
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <div className="flex justify-between gap-2 max-w-sm mx-auto">
-                {otp.map((data, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    inputMode="numeric"
-                    autoComplete="one-time-code"
-                    maxLength={1}
-                    ref={(el) => { inputRefs.current[index] = el; }}
-                    value={data}
-                    onFocus={() => setActiveInput(index)}
-                    onChange={(e) => handleOtpChange(e.target.value, index)}
-                    onKeyDown={(e) => handleKeyDown(e, index)}
-                    className={`w-11 h-12 text-center text-xl font-bold border-2 rounded-lg bg-gray-50/50 outline-none transition-all
-                      ${activeInput === index ? "border-purple-600 ring-2 ring-purple-100" : "border-gray-200"}
-                      ${data ? "border-purple-500 bg-white" : ""}
-                    `}
-                  />
-                ))}
-              </div>
-
-              <div className="text-center">
-                <Button
-                  type="submit"
-                  className="w-full h-12 bg-primary cursor-pointer hover:bg-primary/80 text-white font-medium text-base rounded-lg shadow-sm transition-all"
-                  disabled={isLoading || otp.join("").length < 6}
-                >
-                  {isLoading ? (
-                    <div className="flex items-center justify-center">
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                      Verifying...
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-center">
-                      Verify & Proceed
-                      <ArrowRight className="w-5 h-5 ml-2" />
-                    </div>
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="flex justify-between gap-2 max-w-sm mx-auto">
+              {otp.map((data, index) => (
+                <input
+                  key={index}
+                  type="text"
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  maxLength={1}
+                  ref={(el) => { inputRefs.current[index] = el; }}
+                  value={data}
+                  onFocus={() => setActiveInput(index)}
+                  onChange={(e) => handleOtpChange(e.target.value, index)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                  className={cn(
+                    "w-11 h-12 sm:w-14 sm:h-16 text-center text-xl sm:text-2xl font-bold border-none rounded-xl bg-[#F9FAFB] outline-none transition-all flex items-center justify-center",
+                    activeInput === index ? "ring-1 ring-[#9B85C1] bg-white" : "",
+                    data ? "bg-white ring-1 ring-[#9B85C1]" : ""
                   )}
-                </Button>
-              </div>
-            </form>
-
-            <div className="mt-8 text-center">
-              <p className="text-sm text-gray-500 mb-2">Didn't receive the code?</p>
-              <button
-                onClick={handleResend}
-                disabled={timer > 0}
-                className={`text-sm font-semibold transition-colors ${timer > 0 ? "text-gray-300 cursor-not-allowed" : "text-purple-600 hover:text-purple-700"
-                  }`}
-              >
-                {timer > 0 ? `Resend code in ${timer}s` : "Resend code"}
-              </button>
+                />
+              ))}
             </div>
 
-            <div className="mt-10 flex justify-center border-t pt-6">
-              <Link
-                href="/login"
-                className="flex items-center text-sm font-medium text-teal-500 hover:text-teal-600 transition-colors"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Login
-              </Link>
-            </div>
-          </motion.div>
+            <Button
+              type="submit"
+              disabled={isLoading || otp.join("").length < 6}
+              className="w-full h-12 bg-[#9B85C1] hover:bg-[#8A74B0] text-white rounded-xl text-base font-medium transition-all shadow-md group"
+            >
+              {isLoading ? 'Verifying...' : (
+                <span className="flex items-center gap-2">
+                  Verify & Proceed <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </span>
+              )}
+            </Button>
+          </form>
+
+          <div className="mt-8 text-center">
+            <p className="text-sm text-gray-500 mb-2">Didn't receive the code?</p>
+            <button
+              onClick={handleResend}
+              disabled={timer > 0}
+              className={cn(
+                "text-sm font-semibold transition-colors",
+                timer > 0 ? "text-gray-300 cursor-not-allowed" : "text-[#9B85C1] hover:text-[#8A74B0]"
+              )}
+            >
+              {timer > 0 ? `Resend code in ${timer}s` : "Resend code"}
+            </button>
+          </div>
+
+          <div className="mt-10 flex justify-center pt-6 border-t border-gray-100">
+            <Link
+              href="/login"
+              className="flex items-center text-sm font-medium text-[#5aa8a9] hover:text-[#4a8a8b] transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Login
+            </Link>
+          </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

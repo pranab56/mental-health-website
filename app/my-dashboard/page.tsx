@@ -43,41 +43,41 @@ const notifications = [
 
 export default function DashboardPage() {
   return (
-    <div className="space-y-8 py-4">  
+    <div className="space-y-6 sm:space-y-8 py-2 sm:py-4 px-1 sm:px-0">
 
       {/* Top Action Buttons */}
-      <div className="flex flex-wrap gap-6 items-center px-5 py-3 bg-white rounded-2xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 items-center p-4 sm:p-5 bg-white rounded-2xl shadow-sm border border-gray-100">
         <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className=" p-4 h-16 rounded-2xl bg-gray-50 flex items-center gap-4 min-w-[300px] px-6"
+          whileHover={{ scale: 1.01 }}
+          whileTap={{ scale: 0.99 }}
+          className="p-4 h-16 rounded-2xl bg-gray-50 flex items-center gap-4 w-full px-6 transition-colors hover:bg-violet-50 group"
         >
-          <div className="w-10 h-10 rounded-xl bg-[#F5F3FF] flex items-center justify-center text-[#8B5CF6]">
+          <div className="w-10 h-10 rounded-xl bg-[#F5F3FF] flex items-center justify-center text-[#8B5CF6] shrink-0 group-hover:bg-white transition-colors">
             <Calendar className="w-5 h-5" />
           </div>
-          <span className="font-medium text-lg">Book New Session</span>
+          <span className="font-semibold text-base sm:text-lg text-gray-800">Book New Session</span>
         </motion.button>
 
         <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className=" p-4 h-16 rounded-2xl bg-gray-50 flex items-center gap-4 min-w-[300px] px-6"
+          whileHover={{ scale: 1.01 }}
+          whileTap={{ scale: 0.99 }}
+          className="p-4 h-16 rounded-2xl bg-gray-50 flex items-center gap-4 w-full px-6 transition-colors hover:bg-violet-50 group"
         >
-          <div className="w-10 h-10 rounded-xl bg-[#F5F3FF] flex items-center justify-center text-[#8B5CF6]">
+          <div className="w-10 h-10 rounded-xl bg-[#F5F3FF] flex items-center justify-center text-[#8B5CF6] shrink-0 group-hover:bg-white transition-colors">
             <MessageSquare className="w-5 h-5" />
           </div>
-          <span className="font-medium text-lg">Message Therapist</span>
+          <span className="font-semibold text-base sm:text-lg text-gray-800">Message Therapist</span>
         </motion.button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
 
         {/* Main Left Column (Appointments & Summaries) */}
-        <div className="lg:col-span-2 space-y-10">
+        <div className="lg:col-span-2 space-y-8 sm:space-y-10">
 
           {/* Upcoming Appointments */}
           <section>
-            <h2 className="text-2xl font-medium text-[#1A1A1A] mb-6">Upcoming Appointment Snapshot</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Upcoming Appointment Snapshot</h2>
             <div className="space-y-6">
               {appointments.map((apt, i) => (
                 <motion.div
@@ -85,11 +85,11 @@ export default function DashboardPage() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className="bg-white p-6 rounded-[1rem] shadow-sm flex flex-col md:flex-row gap-6 md:items-center"
+                  className="bg-white p-4 sm:p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-50 flex flex-col sm:flex-row gap-5 sm:gap-6 sm:items-center"
                 >
                   {/* Doctor Image */}
                   <div className="relative shrink-0">
-                    <div className="w-32 h-36 rounded-xl overflow-hidden bg-gray-100">
+                    <div className="w-full sm:w-32 h-48 sm:h-36 rounded-xl overflow-hidden bg-gray-100">
                       <Image
                         src={apt.image}
                         alt={apt.doctor}
@@ -108,7 +108,7 @@ export default function DashboardPage() {
                       <p className="text-[#8B5CF6] font-medium text-sm">{apt.role}</p>
                     </div>
 
-                    <div className="flex flex-wrap gap-4 text-xs font-medium text-gray-500">
+                    <div className="flex flex-wrap gap-2 sm:gap-4 text-[10px] sm:text-xs font-medium text-gray-500">
                       <div className="flex items-center gap-1.5 bg-[#F8FAFC] px-3 py-1.5 rounded-lg">
                         <Calendar className="w-4 h-4 text-gray-400" /> {apt.date}
                       </div>
@@ -120,11 +120,11 @@ export default function DashboardPage() {
                       </div>
                     </div>
 
-                    <div className="flex gap-3 pt-1">
-                      <Button className="bg-[#9B85C1] hover:bg-[#8A74B0] text-white rounded-xl h-11 px-6 font-medium shadow-sm">
+                    <div className="flex flex-col sm:flex-row gap-3 pt-1">
+                      <Button className="bg-[#9B85C1] hover:bg-[#8A74B0] text-white rounded-xl h-11 px-6 font-medium shadow-sm w-full sm:w-auto">
                         <Video className="w-4 h-4 mr-2" /> Join Session
                       </Button>
-                      <Button variant="outline" className="border-[#6BB9BA] text-[#1A1A1A] hover:bg-[#6BB9BA]/5 rounded-xl h-11 px-6 font-medium border-2">
+                      <Button variant="outline" className="border-[#6BB9BA] text-[#1A1A1A] hover:bg-[#6BB9BA]/5 rounded-xl h-11 px-6 font-medium border-2 w-full sm:w-auto">
                         Reschedule
                       </Button>
                     </div>
@@ -136,8 +136,8 @@ export default function DashboardPage() {
 
           {/* Past Session Summaries */}
           <section>
-            <h2 className="text-2xl font-medium text-[#1A1A1A] mb-6">Past Session Summaries</h2>
-            <div className="space-y-4">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Past Session Summaries</h2>
+            <div className="space-y-3 sm:space-y-4">
               {summaries.map((summary, i) => (
                 <motion.div
                   key={i}
@@ -163,12 +163,12 @@ export default function DashboardPage() {
 
         {/* Right Column (Notifications) */}
         <div className="lg:col-span-1">
-          <h2 className="text-2xl font-medium text-[#1A1A1A] mb-6">Notifications</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Notifications</h2>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-white rounded-[1rem] p-6 shadow-sm h-full max-h-[600px] flex flex-col"
+            className="bg-white rounded-[1rem] p-4 sm:p-6 shadow-sm h-full max-h-[500px] lg:max-h-[600px] flex flex-col"
           >
             <div className="space-y-8 flex-1 overflow-y-auto pr-2 custom-scrollbar">
               {notifications.map((notif, i) => (

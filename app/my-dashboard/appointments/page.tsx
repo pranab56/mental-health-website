@@ -99,14 +99,14 @@ export default function AppointmentsPage() {
   const [searchQuery, setSearchQuery] = useState("")
 
   return (
-    <div className="">
-      <div className="space-y-10">
+    <div className="overflow-hidden">
+      <div className="space-y-8 sm:space-y-10">
 
         {/* Search and Filter Section */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-xl p-3 shadow-sm flex flex-col md:flex-row gap-5 items-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="bg-white rounded-xl p-3 sm:p-4 shadow-sm flex flex-col sm:flex-row gap-4 sm:gap-5 items-stretch sm:items-center relative z-10"
         >
           <div className="relative w-full md:max-w-lg">
             <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
@@ -118,8 +118,8 @@ export default function AppointmentsPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          <Button className="h-12 px-10 bg-[#9B8FC7] hover:bg-[#8A79B8] text-white rounded-xl flex items-center gap-3 transition-all text-lg font-medium shadow-lg shadow-[#9B8FC7]/20">
-            <SlidersHorizontal className="h-6 w-6" />
+          <Button className="h-12 px-8 sm:px-10 bg-[#9B8FC7] hover:bg-[#8A79B8] text-white rounded-xl flex items-center justify-center gap-3 transition-all text-base sm:text-lg font-medium shadow-lg shadow-[#9B8FC7]/20 w-full sm:w-auto">
+            <SlidersHorizontal className="h-5 w-5 sm:h-6 sm:w-6" />
             Filter
           </Button>
         </motion.div>
@@ -131,19 +131,19 @@ export default function AppointmentsPage() {
 
         {/* Sessions Table Section */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.99 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
           className="bg-white rounded-xl overflow-hidden border border-slate-100 shadow-sm"
         >
-          <div className="overflow-hidden">
-            <table className="w-full text-left">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left min-w-[800px]">
               <thead>
                 <tr className="bg-[#EBF1F3] text-[#718096] text-[13px] tracking-[0.15em] font-medium">
-                  <th className="px-10 py-5">Session Date</th>
-                  <th className="px-10 py-5">Therapist</th>
-                  <th className="px-10 py-5 text-center">Status</th>
-                  <th className="px-10 py-5 text-center">Action</th>
+                  <th className="px-6 sm:px-10 py-5">Session Date</th>
+                  <th className="px-6 sm:px-10 py-5">Therapist</th>
+                  <th className="px-6 sm:px-10 py-5 text-center">Status</th>
+                  <th className="px-6 sm:px-10 py-5 text-center">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50">
@@ -151,9 +151,13 @@ export default function AppointmentsPage() {
                   {SESSIONS.map((session, index) => (
                     <motion.tr
                       key={session.id}
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.04 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{
+                        delay: index * 0.03,
+                        duration: 0.3,
+                        ease: "easeOut"
+                      }}
                       className="hover:bg-slate-50/50 transition-colors group"
                     >
                       {/* Date & Time */}
@@ -211,29 +215,31 @@ export default function AppointmentsPage() {
         </motion.div>
 
         {/* Pagination Section */}
-        <div className="flex justify-center items-center gap-4 pb-16">
-          <Button variant="ghost" size="icon" className="h-12 w-12 rounded-xl shadow-sm bg-white hover:bg-slate-50 border border-slate-100 group transition-all">
-            <ChevronLeft className="h-6 w-6 text-slate-400 group-hover:text-slate-600" />
+        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 pb-16">
+          <Button variant="ghost" size="icon" className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl shadow-sm bg-white hover:bg-slate-50 border border-slate-100 group transition-all shrink-0">
+            <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 group-hover:text-slate-600" />
           </Button>
 
-          <Button variant="ghost" size="icon" className="h-12 w-12 rounded-xl bg-[#71B7AF] text-white hover:bg-[#5E9E96] font-medium text-lg shadow-xl shadow-[#71B7AF]/20">
-            1
-          </Button>
-          <Button variant="ghost" size="icon" className="h-12 w-12 rounded-xl bg-white shadow-sm text-slate-600 hover:bg-slate-50 border border-slate-100 font-medium transition-all text-lg">
-            2
-          </Button>
-          <Button variant="ghost" size="icon" className="h-12 w-12 rounded-xl bg-white shadow-sm text-slate-600 hover:bg-slate-50 border border-slate-100 font-medium transition-all text-lg">
-            3
-          </Button>
+          <div className="flex items-center gap-2 sm:gap-4">
+            <Button variant="ghost" size="icon" className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-[#71B7AF] text-white hover:bg-[#5E9E96] font-medium text-base sm:text-lg shadow-xl shadow-[#71B7AF]/20">
+              1
+            </Button>
+            <Button variant="ghost" size="icon" className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-white shadow-sm text-slate-600 hover:bg-slate-50 border border-slate-100 font-medium transition-all text-base sm:text-lg">
+              2
+            </Button>
+            <Button variant="ghost" size="icon" className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-white shadow-sm text-slate-600 hover:bg-slate-50 border border-slate-100 font-medium transition-all text-base sm:text-lg">
+              3
+            </Button>
+          </div>
 
-          <span className="px-3 text-slate-300 font-medium text-2xl">...</span>
+          <span className="px-1 sm:px-3 text-slate-300 font-medium text-xl sm:text-2xl hidden xs:inline">...</span>
 
-          <Button variant="ghost" size="icon" className="h-12 w-12 rounded-xl bg-white shadow-sm text-slate-600 hover:bg-slate-50 border border-slate-100 font-extrabold transition-all text-lg">
+          <Button variant="ghost" size="icon" className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-white shadow-sm text-slate-600 hover:bg-slate-50 border border-slate-100 font-extrabold transition-all text-base sm:text-lg">
             12
           </Button>
 
-          <Button variant="ghost" size="icon" className="h-12 w-12 rounded-xl shadow-sm bg-white hover:bg-slate-50 border border-slate-100 group transition-all">
-            <ChevronRight className="h-6 w-6 text-slate-400 group-hover:text-slate-600" />
+          <Button variant="ghost" size="icon" className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl shadow-sm bg-white hover:bg-slate-50 border border-slate-100 group transition-all shrink-0">
+            <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 group-hover:text-slate-600" />
           </Button>
         </div>
 

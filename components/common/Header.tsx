@@ -2,14 +2,16 @@
 
 import { Button } from '@/components/ui/button'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowRight, Menu, MessageSquare, Users, X } from 'lucide-react'
+import { ArrowRight, Menu, X } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export default function Header() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
+  const router = useRouter()
 
   const navItems = [
     { name: 'Home', href: '/' },
@@ -28,11 +30,7 @@ export default function Header() {
       <div className="container mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 z-50 relative">
-          <div className="relative">
-            <Users className="w-8 h-8 text-secondary fill-current" />
-            <MessageSquare className="w-4 h-4 text-primary absolute -top-1 -right-1 fill-white stroke-secondary" />
-          </div>
-          <span className="text-xl font-bold text-foreground tracking-tight">Mynder Therapy</span>
+          <Image src="/icons/Logo.png" alt="Logo" width={1000} height={1000} className='w-full h-16' />
         </Link>
 
         {/* Desktop Navigation */}
@@ -56,6 +54,7 @@ export default function Header() {
         <div className="hidden md:flex items-center gap-4">
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Button
+              onClick={() => router.push('/login')}
               variant="outline"
               className="border-action text-foreground hover:bg-action/5 hover:text-foreground cursor-pointer  w-full h-11 border-2 font-medium"
             >
@@ -65,6 +64,7 @@ export default function Header() {
 
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Button
+              onClick={() => router.push('/signup')}
               className="bg-primary hover:bg-primary/90 text-white h-11 px-6 font-medium cursor-pointer shadow-lg shadow-primary/20"
             >
               Sign UP <ArrowRight className="ml-2 w-4 h-4" />
@@ -112,12 +112,13 @@ export default function Header() {
 
               <div className="flex flex-col gap-4 w-full p-8 w-full">
                 <Button
-
+                  onClick={() => router.push('/login')}
                   className="w-full border-action bg-primary hover:bg-primary/90 cursor-pointer text-white  hover:bg-action/5  px-20 h-12 text-base font-medium"
                 >
                   Login <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
                 <Button
+                  onClick={() => router.push('/signup')}
                   className="w-full bg-primary hover:bg-primary/90 text-white h-12 text-base font-medium shadow-lg shadow-primary/20"
                 >
                   Sign UP <ArrowRight className="ml-2 w-4 h-4" />

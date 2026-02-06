@@ -1,12 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Input, Label, pageAnim, SectionHeader, Textarea } from "./FormPrimitives";
+import { Input, Label, SectionHeader, Textarea } from "./FormPrimitives";
 
 export default function StepFour({ data, setData, errors }: { data: any, setData: any, errors: Record<string, string> }) {
   const set = (key: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setData((d: any) => ({ ...d, [key]: e.target.value }));
   return (
-    <motion.div key="health" {...pageAnim}>
+    <div key="health">
       <SectionHeader>Medical History</SectionHeader>
       <div className="bg-gray-50 rounded-xl border border-gray-100 p-4 mb-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
@@ -30,6 +29,6 @@ export default function StepFour({ data, setData, errors }: { data: any, setData
           <Textarea value={data.pastTherapy} onChange={set("pastTherapy")} placeholder="Describe what has been helpful or unhelpful in the past …" />
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

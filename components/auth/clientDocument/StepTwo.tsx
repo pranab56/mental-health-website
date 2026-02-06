@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { cn, Label, pageAnim, SelectDropdown } from "./FormPrimitives";
+import { cn, Label, SelectDropdown } from "./FormPrimitives";
 
 export default function StepTwo({ data, setData, errors }: { data: any, setData: any, errors: Record<string, string> }) {
   const genders = ["Male", "Female", "Other", "No Preference"];
@@ -13,7 +12,7 @@ export default function StepTwo({ data, setData, errors }: { data: any, setData:
   ];
 
   return (
-    <motion.div key="prefs" {...pageAnim}>
+    <div key="prefs">
       <div className="bg-gray-50 rounded-xl border border-gray-100 p-5 mb-2">
         <p className="text-sm font-semibold text-gray-700 mb-1">Therapy Preferences</p>
         <p className="text-xs text-gray-400">
@@ -89,6 +88,6 @@ export default function StepTwo({ data, setData, errors }: { data: any, setData:
         <Label>Session Frequency</Label>
         <SelectDropdown value={data.frequency} onChange={(v) => setData((d: any) => ({ ...d, frequency: v }))} placeholder="Online" options={["Online", "Weekly", "Bi-weekly", "Monthly"]} error={errors.frequency} />
       </div>
-    </motion.div>
+    </div>
   );
 }

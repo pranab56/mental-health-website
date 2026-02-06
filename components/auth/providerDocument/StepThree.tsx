@@ -1,11 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useRef, useState } from "react";
 import {
   APPROACHES,
   cn,
-  PA,
   POPULATIONS,
   Section,
   SESSION_OPTIONS
@@ -52,7 +50,7 @@ export default function StepThree({ d, s, errors }: { d: any, s: any, errors: Re
   };
 
   return (
-    <motion.div {...PA}>
+    <div key="step3">
       {/* Therapeutic Approaches */}
       <Section title="Therapeutic Approaches">
         <div className="flex flex-wrap gap-2">
@@ -185,6 +183,6 @@ export default function StepThree({ d, s, errors }: { d: any, s: any, errors: Re
         </div>
         {errors.sessions && <p className="text-[10px] text-red-500 mt-2 font-medium">{errors.sessions}</p>}
       </Section>
-    </motion.div>
+    </div>
   );
 }

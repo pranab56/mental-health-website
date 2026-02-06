@@ -1,13 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
 import {
   DocUploadIcon,
   Dropdown,
   GRAD_YEARS,
   Input,
   Label,
-  PA,
   Section,
   Textarea
 } from "./FormPrimitives";
@@ -27,7 +25,7 @@ export default function StepTwo({ d, s, errors }: { d: any, s: any, errors: Reco
   };
 
   return (
-    <motion.div {...PA}>
+    <div key="step2">
       {/* Academic History */}
       <Section title="Academic History">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
@@ -117,6 +115,6 @@ export default function StepTwo({ d, s, errors }: { d: any, s: any, errors: Reco
           </div>
         </div>
       </Section>
-    </motion.div>
+    </div>
   );
 }

@@ -59,9 +59,9 @@ export default function BillingPage() {
             transition={{ duration: 0.5 }}
           >
             <Card className="bg-white border-none rounded-2xl shadow-sm overflow-hidden group">
-              <CardContent className="p-8 space-y-2">
-                <p className="text-slate-500 font-medium text-lg leading-tight">Total Past Due This Year</p>
-                <p className="text-4xl font-medium text-[#2D2D2D]">$2,450.00</p>
+              <CardContent className="p-5 sm:p-8 space-y-2">
+                <p className="text-slate-500 font-medium text-base sm:text-lg leading-tight">Total Past Due This Year</p>
+                <p className="text-3xl sm:text-4xl font-medium text-[#2D2D2D]">$2,450.00</p>
               </CardContent>
             </Card>
           </motion.div>
@@ -72,9 +72,9 @@ export default function BillingPage() {
             transition={{ duration: 0.5 }}
           >
             <Card className="bg-white border-none rounded-2xl shadow-sm overflow-hidden group">
-              <CardContent className="p-8 space-y-2">
-                <p className="text-slate-500 font-medium text-lg leading-tight">Upcoming Payments 2/2/2026</p>
-                <p className="text-4xl font-medium text-[#2D2D2D]">$120.00</p>
+              <CardContent className="p-5 sm:p-8 space-y-2">
+                <p className="text-slate-500 font-medium text-base sm:text-lg leading-tight">Upcoming Payments 2/2/2026</p>
+                <p className="text-3xl sm:text-4xl font-medium text-[#2D2D2D]">$120.00</p>
               </CardContent>
             </Card>
           </motion.div>
@@ -84,9 +84,9 @@ export default function BillingPage() {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-2xl p-3 shadow-sm flex flex-col md:flex-row gap-4 items-center"
+          className="bg-white rounded-2xl p-3 shadow-sm flex flex-col sm:flex-row gap-4 items-stretch sm:items-center"
         >
-          <div className="relative w-full md:max-w-xl">
+          <div className="relative w-full sm:max-w-xl">
             <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5" />
             <Input
               type="text"
@@ -96,12 +96,12 @@ export default function BillingPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          <div className="flex gap-4 w-full md:w-auto">
-            <Button className="h-12 px-8 bg-[#9B8FC7] cursor-pointer hover:bg-[#8A79B8] text-white rounded-xl flex items-center gap-2 transition-all text-base font-medium shadow-lg shadow-[#9B8FC7]/10 w-full md:w-auto">
+          <div className="flex flex-col xs:flex-row gap-3 w-full sm:w-auto">
+            <Button className="h-12 px-8 bg-[#9B8FC7] cursor-pointer hover:bg-[#8A79B8] text-white rounded-xl flex items-center justify-center gap-2 transition-all text-base font-medium shadow-lg shadow-[#9B8FC7]/10 w-full sm:w-auto">
               <SlidersHorizontal className="h-5 w-5" />
               Filter
             </Button>
-            <Button className="h-12 px-8 bg-[#71B7AF] cursor-pointer hover:bg-[#5E9E96] text-white rounded-xl flex items-center gap-2 transition-all text-base font-medium shadow-lg shadow-[#71B7AF]/10 w-full md:w-auto">
+            <Button className="h-12 px-8 bg-[#71B7AF] cursor-pointer hover:bg-[#5E9E96] text-white rounded-xl flex items-center justify-center gap-2 transition-all text-base font-medium shadow-lg shadow-[#71B7AF]/10 w-full sm:w-auto">
               <Download className="h-5 w-5" />
               Export
             </Button>
@@ -115,15 +115,15 @@ export default function BillingPage() {
           transition={{ duration: 0.5 }}
           className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
         >
-          <div className="overflow-hidden">
-            <table className="w-full text-left border-collapse">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse min-w-[900px]">
               <thead>
                 <tr className="bg-[#EBF1F3] text-[#718096] text-[13px] tracking-[0.05em] font-medium uppercase">
-                  <th className="px-10 py-5">Date</th>
-                  <th className="px-10 py-5">Description</th>
-                  <th className="px-10 py-5">Payment Method</th>
-                  <th className="px-10 py-5">Amount</th>
-                  <th className="px-10 py-5">Status</th>
+                  <th className="px-6 sm:px-10 py-5">Date</th>
+                  <th className="px-6 sm:px-10 py-5">Description</th>
+                  <th className="px-6 sm:px-10 py-5">Payment Method</th>
+                  <th className="px-6 sm:px-10 py-5">Amount</th>
+                  <th className="px-6 sm:px-10 py-5">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50">
@@ -181,29 +181,31 @@ export default function BillingPage() {
         </motion.div>
 
         {/* Pagination Section */}
-        <div className="flex justify-center items-center gap-3 pb-12">
-          <Button variant="ghost" size="icon" className="h-11 cursor-pointer w-11 rounded-xl  bg-white hover:bg-slate-50 border border-slate-100 group transition-all">
-            <ChevronLeft className="h-6 w-6 text-slate-400 group-hover:text-slate-600" />
+        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 pb-12">
+          <Button variant="ghost" size="icon" className="h-10 w-10 sm:h-11 cursor-pointer sm:w-11 rounded-xl bg-white hover:bg-slate-50 border border-slate-100 group transition-all shrink-0">
+            <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 group-hover:text-slate-600" />
           </Button>
 
-          <Button variant="ghost" size="icon" className="h-11 cursor-pointer w-11 rounded-xl bg-[#71B7AF] text-white hover:bg-[#5E9E96] font-medium text-lg  shadow-[#71B7AF]/20">
-            1
-          </Button>
-          <Button variant="ghost" size="icon" className="h-11 cursor-pointer w-11 rounded-xl bg-white text-slate-600 hover:bg-slate-50 border border-slate-100 font-medium transition-all text-lg">
-            2
-          </Button>
-          <Button variant="ghost" size="icon" className="h-11 cursor-pointer w-11 rounded-xl bg-white text-slate-600 hover:bg-slate-50 border border-slate-100 font-medium transition-all text-lg">
-            3
-          </Button>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Button variant="ghost" size="icon" className="h-10 w-10 sm:h-11 cursor-pointer sm:w-11 rounded-xl bg-[#71B7AF] text-white hover:bg-[#5E9E96] font-medium text-base sm:text-lg shadow-[#71B7AF]/20">
+              1
+            </Button>
+            <Button variant="ghost" size="icon" className="h-10 w-10 sm:h-11 cursor-pointer sm:w-11 rounded-xl bg-white text-slate-600 hover:bg-slate-50 border border-slate-100 font-medium transition-all text-base sm:text-lg">
+              2
+            </Button>
+            <Button variant="ghost" size="icon" className="h-10 w-10 sm:h-11 cursor-pointer sm:w-11 rounded-xl bg-white text-slate-600 hover:bg-slate-50 border border-slate-100 font-medium transition-all text-base sm:text-lg">
+              3
+            </Button>
+          </div>
 
-          <span className="px-2 text-slate-300 font-medium text-lg">...</span>
+          <span className="px-1 sm:px-2 text-slate-300 font-medium text-base sm:text-lg">...</span>
 
-          <Button variant="ghost" size="icon" className="h-11 cursor-pointer w-11 rounded-xl bg-white text-slate-600 hover:bg-slate-50 border border-slate-100 font-medium transition-all text-lg">
+          <Button variant="ghost" size="icon" className="h-10 w-10 sm:h-11 cursor-pointer sm:w-11 rounded-xl bg-white text-slate-600 hover:bg-slate-50 border border-slate-100 font-medium transition-all text-base sm:text-lg">
             12
           </Button>
 
-          <Button variant="ghost" size="icon" className="h-11 cursor-pointer w-11 rounded-xl bg-white hover:bg-slate-50 border border-slate-100 group transition-all">
-            <ChevronRight className="h-6 w-6 text-slate-400 group-hover:text-slate-600" />
+          <Button variant="ghost" size="icon" className="h-10 w-10 sm:h-11 cursor-pointer sm:w-11 rounded-xl bg-white hover:bg-slate-50 border border-slate-100 group transition-all shrink-0">
+            <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 group-hover:text-slate-600" />
           </Button>
         </div>
 

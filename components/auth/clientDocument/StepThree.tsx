@@ -1,8 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Upload } from "lucide-react";
-import { cn, Input, Label, pageAnim, SectionHeader } from "./FormPrimitives";
+import { cn, Input, Label, SectionHeader } from "./FormPrimitives";
 
 export default function StepThree({ data, setData, errors }: { data: any, setData: any, errors: Record<string, string> }) {
   const set = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => setData((d: any) => ({ ...d, [key]: e.target.value }));
@@ -19,7 +18,7 @@ export default function StepThree({ data, setData, errors }: { data: any, setDat
   };
 
   return (
-    <motion.div key="insurance" {...pageAnim}>
+    <div key="insurance">
       <SectionHeader>Insurance & Payment</SectionHeader>
       <p className="text-xs text-gray-400 -mt-3 mb-4">Almost finished! Just a few more details.</p>
 
@@ -76,6 +75,6 @@ export default function StepThree({ data, setData, errors }: { data: any, setDat
         ))}
       </div>
       {errors.payment && <p className="text-[10px] text-red-500 mt-2 font-medium">{errors.payment}</p>}
-    </motion.div>
+    </div>
   );
 }

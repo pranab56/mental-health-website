@@ -98,12 +98,12 @@ export default function ProviderPage() {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="space-y-8 p-1"
+      className="space-y-6"
     >
       {/* Quick Actions */}
-      <div className="flex gap-4">
-        <motion.div variants={itemVariants} className="flex-1 max-w-[240px]">
-          <Card className="border-none shadow-sm hover:shadow-md transition-shadow cursor-pointer bg-white">
+      <div className="grid grid-cols-1 p-3 bg-white shadow sm:grid-cols-2 rounded-lg lg:flex lg:flex-row gap-4">
+        <motion.div variants={itemVariants} className="w-full lg:max-w-[240px]">
+          <Card className="border-none shadow-sm hover:shadow-md transition-shadow cursor-pointer bg-white p-0">
             <CardContent className="p-4 flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl bg-[#F5F3FF] flex items-center justify-center text-[#9B85C1]">
                 <Calendar className="w-6 h-6" />
@@ -112,8 +112,8 @@ export default function ProviderPage() {
             </CardContent>
           </Card>
         </motion.div>
-        <motion.div variants={itemVariants} className="flex-1 max-w-[240px]">
-          <Card className="border-none shadow-sm hover:shadow-md transition-shadow cursor-pointer bg-white">
+        <motion.div variants={itemVariants} className="w-full lg:max-w-[240px]">
+          <Card className="border-none shadow-sm hover:shadow-md transition-shadow cursor-pointer bg-white p-0">
             <CardContent className="p-4 flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl bg-[#EDF7F7] flex items-center justify-center text-[#6BB9BA]">
                 <MessageSquare className="w-6 h-6" />
@@ -138,22 +138,22 @@ export default function ProviderPage() {
             {appointments.map((apt) => (
               <motion.div key={apt.id} variants={itemVariants}>
                 <Card className="border-none shadow-sm overflow-hidden bg-white">
-                  <CardContent className="p-6 flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <Avatar className="h-14 w-14 rounded-2xl">
-                        <AvatarFallback className="bg-[#EDF7F7] text-[#6BB9BA] font-bold text-lg rounded-2xl">
+                  <CardContent className="p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div className="flex items-center gap-3 sm:gap-4">
+                      <Avatar className="h-12 w-12 sm:h-14 sm:w-14 rounded-xl sm:rounded-2xl">
+                        <AvatarFallback className="bg-[#EDF7F7] text-[#6BB9BA] font-bold text-base sm:text-lg rounded-xl sm:rounded-2xl">
                           {apt.initials}
                         </AvatarFallback>
                       </Avatar>
                       <div>
-                        <h3 className="text-xl font-bold text-[#1e293b]">{apt.name}</h3>
-                        <p className="text-[#64748b] font-medium">
-                          {apt.type} . <span className="text-[#64748b]/80">{apt.time}</span>
+                        <h3 className="text-lg sm:text-xl font-bold text-[#1e293b]">{apt.name}</h3>
+                        <p className="text-xs sm:text-sm md:text-[#64748b] font-medium text-slate-500">
+                          {apt.type} . <span className="text-slate-400 sm:text-[#64748b]/80">{apt.time}</span>
                         </p>
                       </div>
                     </div>
-                    <Button className="bg-[#9B85C1] hover:bg-[#8a74b0] text-white px-6 h-12 rounded-xl flex items-center gap-2 font-bold text-base transition-colors">
-                      <Video className="w-5 h-5 fill-white" />
+                    <Button className="w-full sm:w-auto bg-[#9B85C1] hover:bg-[#8a74b0] text-white px-6 h-11 sm:h-12 rounded-xl flex items-center justify-center gap-2 font-bold text-sm sm:text-base transition-colors shrink-0">
+                      <Video className="w-4 h-4 sm:w-5 sm:h-5 fill-white" />
                       Join Session
                     </Button>
                   </CardContent>
@@ -168,7 +168,7 @@ export default function ProviderPage() {
           <h2 className="text-2xl font-bold text-[#1e293b]">Notifications</h2>
           <motion.div variants={itemVariants}>
             <Card className="border-none shadow-sm bg-white">
-              <CardContent className="p-8 space-y-8">
+              <CardContent className="p-6 sm:p-8 space-y-6 sm:space-y-8">
                 {notifications.map((note) => (
                   <div key={note.id} className="flex gap-4">
                     <div className="mt-1.5">
@@ -212,8 +212,8 @@ export default function ProviderPage() {
               <Card className="border-none shadow-sm overflow-hidden bg-white">
                 <CardContent className="p-8">
                   <div className="flex justify-between items-start mb-6">
-                    <Avatar className="h-16 w-16 rounded-2xl">
-                      <AvatarFallback className="bg-[#EDF7F7] text-[#6BB9BA] font-bold text-xl rounded-2xl">
+                    <Avatar className="h-14 w-14 sm:h-16 sm:w-16 rounded-xl sm:rounded-2xl">
+                      <AvatarFallback className="bg-[#EDF7F7] text-[#6BB9BA] font-bold text-lg sm:text-xl rounded-xl sm:rounded-2xl">
                         {match.initials}
                       </AvatarFallback>
                     </Avatar>
@@ -235,7 +235,7 @@ export default function ProviderPage() {
                     ))}
                   </div>
 
-                  <Button className="w-full bg-[#9B85C1] hover:bg-[#8a74b0] text-white h-12 rounded-xl font-bold text-base shadow-sm transition-colors">
+                  <Button className="w-full bg-[#9B85C1] hover:bg-[#8a74b0] text-white h-11 sm:h-12 rounded-xl font-bold text-sm sm:text-base shadow-sm transition-colors">
                     View Profile
                   </Button>
                 </CardContent>

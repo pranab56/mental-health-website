@@ -153,20 +153,20 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="font-sans pb-24 relative">
+    <div className="font-sans relative">
       <div className="space-y-8">
 
         {/* Header Section */}
-        <div className="space-y-1">
-          <h1 className="text-2xl font-medium text-[#2D2D2D]">Settings</h1>
-          <p className="text-slate-500 font-medium text-sm">Manage your personal information, and account security.</p>
+        <div className="space-y-1 px-1">
+          <h1 className="text-xl sm:text-2xl font-medium text-[#2D2D2D]">Settings</h1>
+          <p className="text-slate-500 font-medium text-xs sm:text-sm">Manage your personal information, and account security.</p>
         </div>
 
         {/* Profile Photo Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-xl p-6 shadow-sm border border-slate-100 flex flex-col md:flex-row items-center gap-8"
+          className="bg-white rounded-xl p-5 sm:p-6 shadow-sm border border-slate-100 flex flex-col md:flex-row items-center gap-6 sm:gap-8"
         >
           <div className="relative group">
             <input
@@ -192,20 +192,20 @@ export default function ProfilePage() {
           <div className="flex flex-col items-center md:items-start gap-4">
             <div className="space-y-1 text-center md:text-left">
               <h3 className="text-lg font-medium text-[#2D2D2D]">Profile Photo</h3>
-              <p className="text-sm text-slate-400 font-medium max-w-xs leading-relaxed">JPG or PNG, max 2MB. A clear face photo is recommended.</p>
+              <p className="text-xs sm:text-sm text-slate-400 font-medium max-w-xs leading-relaxed">JPG or PNG, max 2MB. A clear face photo is recommended.</p>
               {errors.profilePhoto && <p className="text-red-500 text-xs font-bold mt-1">{errors.profilePhoto}</p>}
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 sm:gap-4">
               <Button
                 onClick={handleImageClick}
-                className="bg-[#E9F0FD] hover:bg-[#DDE7F9] text-[#2D2D2D] font-medium rounded-xl px-6 h-10 border-none transition-all cursor-pointer"
+                className="bg-[#E9F0FD] hover:bg-[#DDE7F9] text-[#2D2D2D] font-medium rounded-xl px-4 sm:px-6 h-10 border-none transition-all cursor-pointer text-sm"
               >
                 Update Photo
               </Button>
               <Button
                 variant="ghost"
                 onClick={() => setProfileImage("")}
-                className="text-[#9B8FC7] hover:text-red-500 hover:bg-red-50 font-medium h-10 transition-all cursor-pointer"
+                className="text-[#9B8FC7] hover:text-red-500 hover:bg-red-50 font-medium h-10 transition-all cursor-pointer text-sm"
               >
                 Remove
               </Button>
@@ -215,7 +215,7 @@ export default function ProfilePage() {
 
         {/* Personal Information Section */}
         <SectionWrapper title="Personal Information">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 p-4 sm:p-6">
             <InputGroup label="Full Name" error={errors.fullName}>
               <Input
                 value={formData.fullName}
@@ -280,7 +280,7 @@ export default function ProfilePage() {
 
         {/* Primary Insurance Section */}
         <SectionWrapper title="Primary Insurance">
-          <div className="space-y-6 p-6">
+          <div className="space-y-5 sm:space-y-6 p-4 sm:p-6">
             <InputGroup label="Insurance Provider" error={errors.insuranceProvider}>
               <Input
                 value={formData.insuranceProvider}
@@ -288,7 +288,7 @@ export default function ProfilePage() {
                 className={cn("h-11 bg-white border-slate-100 rounded-xl font-medium focus-visible:ring-[#9B8FC7]/20 w-full", errors.insuranceProvider && "border-red-300")}
               />
             </InputGroup>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
               <InputGroup label="Member ID" error={errors.memberId}>
                 <Input
                   value={formData.memberId}
@@ -344,8 +344,8 @@ export default function ProfilePage() {
 
         {/* Emergency Contact Section */}
         <SectionWrapper title="Emergency Contact">
-          <div className="space-y-6 p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-5 sm:space-y-6 p-4 sm:p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
               <InputGroup label="Contact Full Name" error={errors.emergencyName}>
                 <Input
                   value={formData.emergencyName}
@@ -382,7 +382,7 @@ export default function ProfilePage() {
 
         {/* Billing Address Section */}
         <SectionWrapper title="Billing Address">
-          <div className="space-y-6 p-6">
+          <div className="space-y-5 sm:space-y-6 p-4 sm:p-6">
             <InputGroup label="Street Address" error={errors.street}>
               <Input
                 value={formData.street}
@@ -420,12 +420,12 @@ export default function ProfilePage() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="flex justify-end pt-4"
+          className="flex justify-center sm:justify-end pt-4"
         >
           <Button
             onClick={handleSave}
             disabled={isSubmitting}
-            className="bg-[#9B8FC7] hover:bg-[#8A79B8] text-white rounded-xl px-12 h-12 font-medium transition-all shadow-lg shadow-[#9B8FC7]/20 text-base cursor-pointer disabled:opacity-70 flex items-center gap-2"
+            className="bg-[#9B8FC7] hover:bg-[#8A79B8] text-white rounded-xl px-12 h-12 font-medium transition-all shadow-lg shadow-[#9B8FC7]/20 text-base cursor-pointer disabled:opacity-70 flex items-center justify-center gap-2 w-full sm:w-auto"
           >
             {isSubmitting ? (
               <>
@@ -445,12 +445,12 @@ export default function ProfilePage() {
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="fixed bottom-10 right-10 bg-[#2DC766] text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-4 z-50 border-2 border-white/20"
+            className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 bg-[#2DC766] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl shadow-2xl flex items-center gap-3 sm:gap-4 z-50 border-2 border-white/20 max-w-[calc(100vw-3rem)]"
           >
-            <CheckCircle2 className="h-6 w-6" />
+            <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 shrink-0" />
             <div className="flex flex-col">
-              <span className="font-bold text-lg">Success!</span>
-              <span className="text-sm opacity-90">Your profile has been updated.</span>
+              <span className="font-bold text-base sm:text-lg">Success!</span>
+              <span className="text-xs sm:text-sm opacity-90 leading-tight">Your profile has been updated.</span>
             </div>
           </motion.div>
         )}
@@ -467,8 +467,8 @@ function SectionWrapper({ title, children }: { title: string, children: React.Re
       viewport={{ once: true }}
       className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden"
     >
-      <div className="px-6 py-4 border-b border-slate-50 bg-[#FBFBFB]/50">
-        <h2 className="text-lg font-medium text-[#2D2D2D]">{title}</h2>
+      <div className="px-4 sm:px-6 py-4 border-b border-slate-50 bg-[#FBFBFB]/50">
+        <h2 className="text-base sm:text-lg font-medium text-[#2D2D2D]">{title}</h2>
       </div>
       <div className="bg-[#FBFBFB]/10">
         {children}
