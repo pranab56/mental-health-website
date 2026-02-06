@@ -25,7 +25,7 @@ export default function FAQPage() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-muted-foreground text-md md:text-lg max-w-2xl mx-auto"
           >
-            We're here to support you 24/7 with any questions you may have about your mental health journey.
+            We&apos;re here to support you 24/7 with any questions you may have about your mental health journey.
           </motion.p>
         </div>
 

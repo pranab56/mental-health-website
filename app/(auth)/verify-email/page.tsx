@@ -129,7 +129,7 @@ export default function VerifyEmail() {
           </form>
 
           <div className="mt-8 text-center">
-            <p className="text-sm text-gray-500 mb-2">Didn't receive the code?</p>
+            <p className="text-sm text-gray-500 mb-2">Didn&apos;t receive the code?</p>
             <button
               onClick={handleResend}
               disabled={timer > 0}

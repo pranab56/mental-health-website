@@ -59,9 +59,29 @@ function SuccessScreen({ name, onReset }: { name: string; onReset: () => void })
 }
 
 /* ══════════════════════════ ROOT ═════════════════════════════ */
+interface ProviderFormData {
+  name?: string;
+  email?: string;
+  phone?: string;
+  dob?: string;
+  gender?: string;
+  office?: string;
+  degree?: string;
+  gradYear?: string;
+  license?: string;
+  state?: string;
+  type?: string;
+  approaches?: string[];
+  populations?: string[];
+  sessions?: string[];
+  profilePhoto?: File | null;
+  introVideo?: File | null;
+  [key: string]: string | string[] | File | null | undefined;
+}
+
 export default function ProviderIntakeForm() {
   const [step, setStep] = useState(0);
-  const [d, setD] = useState<any>({});
+  const [d, setD] = useState<ProviderFormData>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [done, setDone] = useState(false);
 
@@ -101,7 +121,7 @@ export default function ProviderIntakeForm() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  if (done) return <SuccessScreen name={d.name} onReset={() => { setDone(false); setStep(0); setD({}); setErrors({}); }} />;
+  if (done) return <SuccessScreen name={d.name || ""} onReset={() => { setDone(false); setStep(0); setD({}); setErrors({}); }} />;
 
   const pages = [
     <StepOne key="1" d={d} s={setD} errors={errors} />,

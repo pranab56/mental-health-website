@@ -69,7 +69,7 @@ export default function ForgotPassword() {
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Check your email</h2>
               <p className="text-sm sm:text-base text-gray-500 mb-8 leading-relaxed">
-                We've sent a password reset link to <br /><span className="font-semibold text-gray-900">{email}</span>.
+                We&apos;ve sent a password reset link to <br /><span className="font-semibold text-gray-900">{email}</span>.
               </p>
               <Button
                 variant="ghost"
@@ -86,7 +86,7 @@ export default function ForgotPassword() {
                   Reset Password
                 </h2>
                 <p className="text-sm sm:text-base text-gray-500 leading-relaxed">
-                  Enter your email and we'll send you a link to reset your password.
+                  Enter your email and we&apos;ll send you a link to reset your password.
                 </p>
               </div>
 

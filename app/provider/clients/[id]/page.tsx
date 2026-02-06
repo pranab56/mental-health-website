@@ -49,7 +49,10 @@ const itemVariants = {
   visible: { y: 0, opacity: 1 },
 };
 
-export default function ClientProfilePage({ params }: { params: { id: string } }) {
+import { use } from "react";
+
+export default function ClientProfilePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   return (
     <motion.div
       initial="hidden"

@@ -94,7 +94,7 @@ export default function ResetPassword() {
                   New Password
                 </h2>
                 <p className="text-sm sm:text-base text-gray-500 leading-relaxed">
-                  Please enter a new password for your account. Make sure it's secure.
+                  Please enter a new password for your account. Make sure it&apos;s secure.
                 </p>
               </div>
 

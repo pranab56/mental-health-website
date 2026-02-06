@@ -50,6 +50,7 @@ export default function ArticleDetailsPage() {
   const articleId = Number(params.id) || 1
   const article = articles.find(a => a.id === articleId) || articles[0]
   const relatedArticles = articles.filter(a => a.id !== article.id).slice(0, 3)
+  console.log(relatedArticles)
 
   return (
     <main className="min-h-screen bg-sidebar pb-20">
@@ -122,12 +123,12 @@ export default function ArticleDetailsPage() {
 
             <h2 className="text-2xl font-bold text-foreground mb-4 font-sans">The Science Behind the Practice</h2>
             <p className="text-muted-foreground leading-relaxed mb-8">
-              Mindfulness is more than just a buzzword; it's a scientifically proven tool that helps us navigate the complexities of modern life. In this comprehensive guide, we'll explore how you can start your journey toward mental clarity and emotional balance.
+              Mindfulness is more than just a buzzword; it&apos;s a scientifically proven tool that helps us navigate the complexities of modern life. In this comprehensive guide, we&apos;ll explore how you can start your journey toward mental clarity and emotional balance.
             </p>
 
             <h2 className="text-2xl font-bold text-foreground mb-6 font-sans">Three Simple Steps to Begin Today</h2>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              You don't need a meditation cushion or a silent retreat to begin. You can practice mindfulness in the midst of your busiest days.
+              You don&apos;t need a meditation cushion or a silent retreat to begin. You can practice mindfulness in the midst of your busiest days.
             </p>
 
             <ul className="space-y-6 list-none pl-0">
@@ -155,7 +156,7 @@ export default function ArticleDetailsPage() {
             </ul>
 
             <p className="text-muted-foreground leading-relaxed mt-8">
-              As you continue your practice, you'll notice that the "mental chatter" doesn't necessarily stop, but your relationship with it changes. You become the observer of your experience rather than a captive to it.
+              As you continue your practice, you&apos;ll notice that the &quot;mental chatter&quot; doesn&apos;t necessarily stop, but your relationship with it changes. You become the observer of your experience rather than a captive to it.
             </p>
           </div>
 
