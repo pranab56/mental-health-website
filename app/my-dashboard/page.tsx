@@ -121,10 +121,10 @@ export default function DashboardPage() {
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-3 pt-1">
-                      <Button className="bg-[#9B85C1] hover:bg-[#8A74B0] text-white rounded-xl h-11 px-6 font-medium shadow-sm w-full sm:w-auto">
+                      <Button className="bg-[#9B85C1] cursor-pointer hover:bg-[#8A74B0] text-white rounded-xl h-11 px-6 font-medium shadow-sm w-full sm:w-auto">
                         <Video className="w-4 h-4 mr-2" /> Join Session
                       </Button>
-                      <Button variant="outline" className="border-[#6BB9BA] text-[#1A1A1A] hover:bg-[#6BB9BA]/5 rounded-xl h-11 px-6 font-medium border-2 w-full sm:w-auto">
+                      <Button variant="outline" className="border-[#6BB9BA] cursor-pointer text-[#1A1A1A] hover:bg-[#6BB9BA]/5 rounded-xl h-11 px-6 font-medium border-2 w-full sm:w-auto">
                         Reschedule
                       </Button>
                     </div>
@@ -183,7 +183,7 @@ export default function DashboardPage() {
             </div>
 
             <div className="mt-8 pt-4 border-t border-gray-100 flex justify-center">
-              <Link href="#" className="text-[#9B85C1] font-medium text-sm flex items-center gap-2 hover:underline">
+              <Link href="#" className="text-[#9B85C1] cursor-pointer font-medium text-sm flex items-center gap-2 hover:underline">
                 View all activity <span className="text-lg">→</span>
               </Link>
             </div>

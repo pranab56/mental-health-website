@@ -137,7 +137,7 @@ export default function ProviderPage() {
           <div className="space-y-4">
             {appointments.map((apt) => (
               <motion.div key={apt.id} variants={itemVariants}>
-                <Card className="border-none shadow-sm overflow-hidden bg-white">
+                <Card className="border-none shadow-sm overflow-hidden bg-white p-0">
                   <CardContent className="p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-3 sm:gap-4">
                       <Avatar className="h-12 w-12 sm:h-14 sm:w-14 rounded-xl sm:rounded-2xl">
@@ -152,7 +152,7 @@ export default function ProviderPage() {
                         </p>
                       </div>
                     </div>
-                    <Button className="w-full sm:w-auto bg-[#9B85C1] hover:bg-[#8a74b0] text-white px-6 h-11 sm:h-12 rounded-xl flex items-center justify-center gap-2 font-bold text-sm sm:text-base transition-colors shrink-0">
+                    <Button className="w-full sm:w-auto cursor-pointer bg-[#9B85C1] hover:bg-[#8a74b0] text-white px-6 h-11 sm:h-12 rounded-xl flex items-center justify-center gap-2 font-bold text-sm sm:text-base transition-colors shrink-0">
                       <Video className="w-4 h-4 sm:w-5 sm:h-5 fill-white" />
                       Join Session
                     </Button>
@@ -181,7 +181,7 @@ export default function ProviderPage() {
                   </div>
                 ))}
                 <div className="pt-4 text-center">
-                  <button className="text-[#9B85C1] font-bold flex items-center gap-2 mx-auto hover:underline transition-all">
+                  <button className="text-[#9B85C1] cursor-pointer font-bold flex items-center gap-2 mx-auto hover:underline transition-all">
                     View all activity
                     <ChevronRight className="w-5 h-5" />
                   </button>
@@ -235,7 +235,7 @@ export default function ProviderPage() {
                     ))}
                   </div>
 
-                  <Button className="w-full bg-[#9B85C1] hover:bg-[#8a74b0] text-white h-11 sm:h-12 rounded-xl font-bold text-sm sm:text-base shadow-sm transition-colors">
+                  <Button className="w-full cursor-pointer bg-[#9B85C1] hover:bg-[#8a74b0] text-white h-11 sm:h-12 rounded-xl font-bold text-sm sm:text-base shadow-sm transition-colors">
                     View Profile
                   </Button>
                 </CardContent>

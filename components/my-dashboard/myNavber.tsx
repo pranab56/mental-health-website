@@ -34,7 +34,7 @@ export default function MyNavber() {
         {/* User Profile */}
         <div className="flex items-center gap-2 sm:gap-3">
           <div className="text-right hidden md:block">
-            <p className="text-sm font-bold text-gray-900 leading-none mb-1">Rasel Parvez</p>
+            <p className="text-sm font-bold text-gray-900 leading-none mb-1">Welcome back</p>
             <p className="text-[10px] sm:text-xs text-muted-foreground font-medium uppercase tracking-wider">{isProvider ? "Provider" : "Client"}</p>
           </div>
           <Avatar className="h-9 w-9 sm:h-11 sm:w-11 rounded-lg sm:rounded-xl border border-gray-100 shadow-sm">

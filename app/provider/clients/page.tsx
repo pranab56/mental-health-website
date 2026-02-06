@@ -139,7 +139,7 @@ export default function ClientsPage() {
                 </div>
 
                 <Link href={`/provider/clients/${client.id}`}>
-                  <Button className="w-full bg-[#9B85C1] hover:bg-[#8a74b0] text-white h-12 rounded-xl font-bold text-base transition-colors">
+                  <Button className="w-full cursor-pointer bg-[#9B85C1] hover:bg-[#8a74b0] text-white h-12 rounded-xl font-bold text-base transition-colors">
                     View Profile
                   </Button>
                 </Link>

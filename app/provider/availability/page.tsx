@@ -92,7 +92,7 @@ export default function AvailabilityPage() {
               </div>
 
               {/* Save Button */}
-              <Button className="w-full bg-[#9B85C1] hover:bg-[#8a74b0] text-white h-12 sm:h-14 rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg shadow-sm transition-all mt-4">
+              <Button className="w-full cursor-pointer bg-[#9B85C1] hover:bg-[#8a74b0] text-white h-12 sm:h-14 rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg shadow-sm transition-all mt-4">
                 Save Availability
               </Button>
             </CardContent>

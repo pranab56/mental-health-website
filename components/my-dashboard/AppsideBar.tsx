@@ -13,7 +13,13 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -21,6 +27,7 @@ import {
   ClockAlert,
   LayoutDashboard,
   LogOut,
+  LucideIcon,
   MessageSquare,
   Receipt,
   Search,
@@ -32,7 +39,19 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const clientMenuItems = [
+type MenuChild = {
+  name: string;
+  path: string;
+};
+
+type MenuItem = {
+  name: string;
+  path: string;
+  icon: LucideIcon;
+  children?: MenuChild[];
+};
+
+const clientMenuItems: MenuItem[] = [
   { name: "Dashboard", path: "/my-dashboard", icon: LayoutDashboard },
   { name: "Find Provider", path: "/my-dashboard/providers", icon: Search },
   { name: "My Appointments", path: "/my-dashboard/appointments", icon: Calendar },
@@ -41,7 +60,7 @@ const clientMenuItems = [
   { name: "My Profile", path: "/my-dashboard/profile", icon: User },
 ];
 
-const providerMenuItems = [
+const providerMenuItems: MenuItem[] = [
   { name: "Overview", path: "/provider", icon: LayoutDashboard },
   {
     name: "Appointments",
@@ -63,6 +82,8 @@ const providerMenuItems = [
 export default function AppSideBar() {
   const pathname = usePathname();
   const router = useRouter();
+  const { state } = useSidebar();
+  const isCollapsed = state === "collapsed";
   const [openItems, setOpenItems] = useState<string[]>([]);
 
   const isProviderPath = pathname.startsWith("/provider");
@@ -99,17 +120,21 @@ export default function AppSideBar() {
   };
 
   return (
-    <Sidebar className="border-none max-w-[280px]">
+    <Sidebar collapsible="icon" className="border-none">
       <SidebarContent className="bg-[#6BB9BA] text-white flex flex-col h-full font-sans">
 
         {/* LOGO Header */}
-        <SidebarHeader className="p-8 pb-4">
-          <Link href="/" className="flex items-center gap-3">
-            <Image src="/icons/Logo.png" alt="Logo" width={1000} height={1000} className="w-full h-20" />
+        <SidebarHeader className={cn("p-8 pb-4", isCollapsed && "p-2 pb-2")}>
+          <Link href="/" className="flex items-center justify-center gap-3">
+            {isCollapsed ? (
+              <Image src="/icons/dashboardLogo.png" alt="Logo" width={40} height={40} className="w-10 h-10 object-contain" />
+            ) : (
+              <Image src="/icons/dashboardLogo.png" alt="Logo" width={1000} height={1000} className="w-full h-20" />
+            )}
           </Link>
         </SidebarHeader>
         {/* Navigation */}
-        <SidebarGroup className="flex-1 px-0 mt-8">
+        <SidebarGroup className={cn("flex-1 px-0 mt-8", isCollapsed && "mt-4 px-0")}>
           <SidebarGroupContent>
             <SidebarMenu className="gap-1">
               {menuItems.map((item) => {
@@ -119,31 +144,42 @@ export default function AppSideBar() {
 
                 return (
                   <SidebarMenuItem key={item.name}>
-                    <SidebarMenuButton
-                      asChild={!hasChildren}
-                      onClick={hasChildren ? () => toggleItem(item.name) : undefined}
-                      className={cn(
-                        "h-14 px-8 w-full rounded-none transition-all duration-200 hover:bg-white/10 cursor-pointer",
-                        active
-                          ? "bg-[#9B85C1] hover:bg-[#9B85C1] text-white font-medium relative after:absolute after:left-0 after:top-0 after:h-full after:w-1 after:bg-white/50"
-                          : "text-white/90"
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <SidebarMenuButton
+                          asChild={!hasChildren}
+                          onClick={hasChildren ? () => toggleItem(item.name) : undefined}
+                          className={cn(
+                            "h-14 px-8 w-full rounded-none transition-all duration-200 hover:bg-white/10 cursor-pointer",
+                            "group-data-[collapsible=icon]:!h-14 group-data-[collapsible=icon]:!w-full group-data-[collapsible=icon]:!p-0",
+                            active
+                              ? "bg-[#9B85C1] hover:bg-[#9B85C1] text-white font-medium relative after:absolute after:left-0 after:top-0 after:h-full after:w-1 after:bg-white/50"
+                              : "text-white/90",
+                            isCollapsed && "justify-center [&>div]:justify-center [&>a]:justify-center"
+                          )}
+                        >
+                          {hasChildren ? (
+                            <div className={cn("flex items-center gap-4 text-base w-full", isCollapsed && "justify-center")}>
+                              <item.icon className="w-5 h-5 shrink-0" strokeWidth={1.5} />
+                              {!isCollapsed && <span>{item.name}</span>}
+                            </div>
+                          ) : (
+                            <Link href={item.path} className={cn("flex items-center gap-4 text-base", isCollapsed && "justify-center")}>
+                              <item.icon className="w-5 h-5 shrink-0" strokeWidth={1.5} />
+                              {!isCollapsed && <span>{item.name}</span>}
+                            </Link>
+                          )}
+                        </SidebarMenuButton>
+                      </TooltipTrigger>
+                      {isCollapsed && (
+                        <TooltipContent side="right" className="bg-[#6BB9BA] text-white border-none shadow-lg">
+                          {item.name}
+                        </TooltipContent>
                       )}
-                    >
-                      {hasChildren ? (
-                        <div className="flex items-center gap-4 text-base w-full">
-                          <item.icon className="w-5 h-5" strokeWidth={1.5} />
-                          <span>{item.name}</span>
-                        </div>
-                      ) : (
-                        <Link href={item.path} className="flex items-center gap-4 text-base">
-                          <item.icon className={`w-5 h-5 ${active ? "text-white" : "text-white"}`} strokeWidth={1.5} />
-                          <span>{item.name}</span>
-                        </Link>
-                      )}
-                    </SidebarMenuButton>
+                    </Tooltip>
 
                     <AnimatePresence>
-                      {hasChildren && isSectionOpen && (
+                      {hasChildren && isSectionOpen && !isCollapsed && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
@@ -182,16 +218,28 @@ export default function AppSideBar() {
         </SidebarGroup>
 
         {/* Footer / Logout */}
-        <SidebarFooter className="p-8 pb-10">
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={handleLogout}
-            className="w-full h-12 bg-[#FF5858] cursor-pointer hover:bg-[#ff4545] text-white rounded-xl font-medium flex items-center justify-center gap-3 shadow-lg transition-colors"
-          >
-            <LogOut className="w-5 h-5 rotate-180" />
-            <span>Logout</span>
-          </motion.button>
+        <SidebarFooter className={cn("p-8 pb-10", isCollapsed && "p-2 pb-4")}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={handleLogout}
+                className={cn(
+                  "w-full h-12 bg-[#FF5858] cursor-pointer hover:bg-[#ff4545] text-white rounded-xl font-medium flex items-center justify-center gap-3 shadow-lg transition-colors",
+                  isCollapsed && "w-10 h-10 rounded-lg gap-0"
+                )}
+              >
+                <LogOut className="w-5 h-5 rotate-180 shrink-0" />
+                {!isCollapsed && <span>Logout</span>}
+              </motion.button>
+            </TooltipTrigger>
+            {isCollapsed && (
+              <TooltipContent side="right" className="bg-[#FF5858] text-white border-none shadow-lg">
+                Logout
+              </TooltipContent>
+            )}
+          </Tooltip>
         </SidebarFooter>
 
       </SidebarContent>
