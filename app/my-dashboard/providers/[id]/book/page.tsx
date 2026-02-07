@@ -180,7 +180,7 @@ export default function BookingPage() {
             </Button>
 
             <p className="text-[15px] text-center text-muted-foreground leading-relaxed px-4">
-              You won't be charged yet. We'll verify your insurance in the next step.
+              You won&apos;t be charged yet. We&apos;ll verify your insurance in the next step.
             </p>
           </Card>
         </div>

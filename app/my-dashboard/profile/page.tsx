@@ -18,6 +18,7 @@ import {
   CheckCircle2,
   Image as ImageIcon
 } from "lucide-react"
+import Image from 'next/image'
 import React, { ChangeEvent, useRef, useState } from "react"
 
 // --- Types ---
@@ -320,7 +321,7 @@ export default function ProfilePage() {
                 )}
               >
                 {insuranceImage ? (
-                  <img src={insuranceImage} alt="Insurance" className="absolute inset-0 w-full h-full object-cover" />
+                  <Image src={insuranceImage} width={1000} height={1000} alt="Insurance" className="absolute inset-0 w-full h-full object-cover" />
                 ) : (
                   <>
                     <div className="h-11 w-11 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center">

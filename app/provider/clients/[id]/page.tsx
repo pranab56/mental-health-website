@@ -53,6 +53,7 @@ import { use } from "react";
 
 export default function ClientProfilePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
+  console.log("Client ID:", id);
   return (
     <motion.div
       initial="hidden"

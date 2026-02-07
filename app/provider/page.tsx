@@ -128,7 +128,7 @@ export default function ProviderPage() {
         {/* Today's Appointments */}
         <div className="lg:col-span-2 space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-[#1e293b]">Today's Appointments</h2>
+            <h2 className="text-2xl font-bold text-[#1e293b]">Today&apos;s Appointments</h2>
             <Badge variant="secondary" className="bg-[#EDF7F7] text-[#6BB9BA] border-none px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-[#EDF7F7]">
               3 Sessions Today
             </Badge>

@@ -68,7 +68,7 @@ export default function Review() {
             >
               <div className="mb-8">
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  "{review.content}"
+                  &quot;{review.content}&quot;
                 </p>
               </div>
 

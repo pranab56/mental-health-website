@@ -32,7 +32,7 @@ export default function BookingSuccessPage() {
       >
         <h1 className="text-3xl font-bold text-foreground">Booking Confirmed!</h1>
         <p className="text-muted-foreground text-lg">
-          You're all set for your session with <span className="text-foreground font-bold">Dr. Sarah Jenkins</span>. We've sent a confirmation email with all the details and meeting links.
+          You&apos;re all set for your session with <span className="text-foreground font-bold">Dr. Sarah Jenkins</span>. We&apos;ve sent a confirmation email with all the details and meeting links.
         </p>
       </motion.div>
 

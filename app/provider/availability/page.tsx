@@ -37,6 +37,7 @@ const itemVariants = {
 export default function AvailabilityPage() {
   const [duration, setDuration] = useState("60 mins");
   const [selectedSlot, setSelectedSlot] = useState("11:30 AM");
+  console.log("Selected Slot:", selectedSlot);
 
   return (
     <motion.div

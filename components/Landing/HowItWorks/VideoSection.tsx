@@ -37,7 +37,7 @@ export default function VideoSection() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-muted-foreground text-md leading-relaxed"
           >
-            Four simple steps to personalized mental health support. We've designed a seamless
+            Four simple steps to personalized mental health support. We&apos;ve designed a seamless
             journey so you can focus on what matters: your well-being
           </motion.p>
         </div>

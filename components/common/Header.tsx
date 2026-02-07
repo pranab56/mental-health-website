@@ -30,7 +30,7 @@ export default function Header() {
       <div className="container mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 z-50 relative">
-          <Image src="/icons/Logo.png" alt="Logo" width={1000} height={1000} className='w-full h-16' />
+          <Image src="/icons/Logo.png" alt="Logo" width={1200} height={1200} className='w-full h-12' />
         </Link>
 
         {/* Desktop Navigation */}

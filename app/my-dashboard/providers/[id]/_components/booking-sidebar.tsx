@@ -100,7 +100,7 @@ export function BookingSidebar() {
           </Button>
 
           <p className="text-[10px] text-center text-muted-foreground leading-relaxed px-4">
-            You won't be charged yet. We'll verify your insurance in the next step.
+            You won&apos;t be charged yet. You won&apos;t be charged yet. We&apos;ll verify your insurance in the next step.
           </p>
         </div>
       </CardContent>
