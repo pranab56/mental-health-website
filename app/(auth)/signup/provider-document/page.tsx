@@ -4,6 +4,7 @@ import { cn } from "@/components/auth/providerDocument/FormPrimitives";
 import StepOne from "@/components/auth/providerDocument/StepOne";
 import StepThree from "@/components/auth/providerDocument/StepThree";
 import StepTwo from "@/components/auth/providerDocument/StepTwo";
+import { ProviderIntakeFormData } from "@/components/auth/providerDocument/types";
 import { useState } from "react";
 
 /* ══════════════════════════ CONSTANTS ════════════════════════ */
@@ -58,30 +59,31 @@ function SuccessScreen({ name, onReset }: { name: string; onReset: () => void })
   );
 }
 
-/* ══════════════════════════ ROOT ═════════════════════════════ */
-interface ProviderFormData {
-  name?: string;
-  email?: string;
-  phone?: string;
-  dob?: string;
-  gender?: string;
-  office?: string;
-  degree?: string;
-  gradYear?: string;
-  license?: string;
-  state?: string;
-  type?: string;
-  approaches?: string[];
-  populations?: string[];
-  sessions?: string[];
-  profilePhoto?: File | null;
-  introVideo?: File | null;
-  [key: string]: string | string[] | File | null | undefined;
-}
+const INITIAL: ProviderIntakeFormData = {
+  name: "",
+  email: "",
+  phone: "",
+  dob: "",
+  gender: "",
+  office: "",
+  degree: "",
+  gradYear: "",
+  license: "",
+  state: "",
+  type: "",
+  approaches: [],
+  populations: [],
+  sessions: [],
+  profilePhoto: null,
+  profPhotoMedia: null,
+  profVideoMedia: null,
+  cvFile: null,
+  licenseFile: null,
+};
 
 export default function ProviderIntakeForm() {
   const [step, setStep] = useState(0);
-  const [d, setD] = useState<ProviderFormData>({});
+  const [d, setD] = useState<ProviderIntakeFormData>(INITIAL);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [done, setDone] = useState(false);
 

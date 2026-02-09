@@ -3,15 +3,23 @@
 import { Upload } from "lucide-react";
 import { cn, Input, Label, SectionHeader } from "./FormPrimitives";
 
-export default function StepThree({ data, setData, errors }: { data: any, setData: any, errors: Record<string, string> }) {
-  const set = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) => setData((d: any) => ({ ...d, [key]: e.target.value }));
+import Image from 'next/image';
+import { ClientIntakeFormData } from "./types";
+
+export default function StepThree({ data, setData, errors }: {
+  data: ClientIntakeFormData;
+  setData: React.Dispatch<React.SetStateAction<ClientIntakeFormData>>;
+  errors: Record<string, string>;
+}) {
+  const set = (key: keyof ClientIntakeFormData) => (e: React.ChangeEvent<HTMLInputElement>) =>
+    setData((d) => ({ ...d, [key]: e.target.value }));
 
   const handleCardPhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setData((d: any) => ({ ...d, insCardPhoto: reader.result }));
+        setData((d) => ({ ...d, insCardPhoto: reader.result as string }));
       };
       reader.readAsDataURL(file);
     }
@@ -26,16 +34,16 @@ export default function StepThree({ data, setData, errors }: { data: any, setDat
         <div className="mb-3"><Label>Insurance Provider</Label><Input value={data.insProvider} onChange={set("insProvider")} placeholder="Blue Cross Blue Shield" error={errors.insProvider} /></div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div><Label>Member ID</Label><Input value={data.memberId} onChange={set("memberId")} placeholder="ABC123456789" error={errors.memberId} /></div>
-          <div><Label>Group Number</Label><Input value={data.groupNum} onChange={set("groupNum")} placeholder="62704" error={errors.groupNum} /></div>
+          <div><Label>Group Number</Label><Input type='number' value={data.groupNum} onChange={set("groupNum")} placeholder="62704" error={errors.groupNum} /></div>
         </div>
 
         {/* Card photo upload */}
         <div className="mt-4">
           <Label>Insurance Card Photo</Label>
-          <label className="relative overflow-hidden border-2 border-dashed border-violet-200 rounded-xl p-6 flex flex-col items-center gap-1 bg-violet-50 cursor-pointer hover:border-violet-400 transition-colors">
+          <label className="relative overflow-hidden border-2 border-dashed border-violet-200 rounded-xl p-6 flex flex-col items-center gap-1 bg-violet-50 cursor-pointer hover:border-violet-400 h-[200px] transition-colors">
             {data.insCardPhoto ? (
               <div className="absolute inset-0 w-full h-full">
-                <img src={data.insCardPhoto} alt="Insurance Card" className="w-full h-full object-cover" />
+                <Image src={data.insCardPhoto as string} width={1000} height={1000} alt="Insurance Card" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
                   <p className="text-white text-xs font-semibold">Change Photo</p>
                 </div>
@@ -59,7 +67,7 @@ export default function StepThree({ data, setData, errors }: { data: any, setDat
           <button
             key={m}
             type="button"
-            onClick={() => setData((d: any) => ({ ...d, payment: m }))}
+            onClick={() => setData((d) => ({ ...d, payment: m }))}
             className={cn(
               "rounded-xl border p-4 flex flex-col items-center gap-2 text-xs font-medium transition-all duration-200",
               data.payment === m

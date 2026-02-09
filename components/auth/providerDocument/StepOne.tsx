@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import {
   Dropdown,
   Input,
@@ -9,15 +10,22 @@ import {
   VideoUploadIcon
 } from "./FormPrimitives";
 
-export default function StepOne({ d, s, errors }: { d: any, s: any, errors: Record<string, string> }) {
-  const u = (k: string) => (e: React.ChangeEvent<HTMLInputElement>) => s((p: any) => ({ ...p, [k]: e.target.value }));
+import { ProviderIntakeFormData } from "./types";
 
-  const handleFileChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+export default function StepOne({ d, s, errors }: {
+  d: ProviderIntakeFormData;
+  s: React.Dispatch<React.SetStateAction<ProviderIntakeFormData>>;
+  errors: Record<string, string>;
+}) {
+  const u = (k: keyof ProviderIntakeFormData) => (e: React.ChangeEvent<HTMLInputElement>) =>
+    s((p) => ({ ...p, [k]: e.target.value }));
+
+  const handleFileChange = (field: keyof ProviderIntakeFormData) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        s((p: any) => ({ ...p, [field]: reader.result }));
+        s((p) => ({ ...p, [field]: reader.result as string }));
       };
       reader.readAsDataURL(file);
     }
@@ -29,7 +37,7 @@ export default function StepOne({ d, s, errors }: { d: any, s: any, errors: Reco
       <div className="bg-gray-50 rounded-xl border border-gray-100 p-4 flex items-center gap-4 mb-4">
         <div className="relative w-14 h-14 rounded-full bg-gray-200 border border-gray-100 flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
           {d.profilePhoto ? (
-            <img src={d.profilePhoto} alt="Profile" className="w-full h-full object-cover" />
+            <Image src={d.profilePhoto} alt="Profile" width={1000} height={1000} className="w-full h-full object-cover" />
           ) : (
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="1.8">
               <circle cx="12" cy="8" r="4" />
@@ -48,7 +56,7 @@ export default function StepOne({ d, s, errors }: { d: any, s: any, errors: Reco
             {d.profilePhoto && (
               <button
                 type="button"
-                onClick={() => s((p: any) => ({ ...p, profilePhoto: null }))}
+                onClick={() => s((p) => ({ ...p, profilePhoto: null }))}
                 className="text-xs text-red-500 font-medium hover:text-red-700 transition-colors"
               >
                 Remove
@@ -68,7 +76,7 @@ export default function StepOne({ d, s, errors }: { d: any, s: any, errors: Reco
         </div>
         <div className="mt-4">
           <Label>Gender Identity</Label>
-          <Dropdown value={d.gender} onChange={(v) => s((p: any) => ({ ...p, gender: v }))} placeholder="Select Gender" options={["Male", "Female", "Non-binary", "Other", "Prefer not to say"]} error={errors.gender} />
+          <Dropdown value={d.gender || ""} onChange={(v) => s((p) => ({ ...p, gender: v }))} placeholder="Select Gender" options={["Male", "Female", "Non-binary", "Other", "Prefer not to say"]} error={errors.gender} />
         </div>
       </Section>
 
@@ -88,7 +96,7 @@ export default function StepOne({ d, s, errors }: { d: any, s: any, errors: Reco
             <label className="relative block border-2 border-dashed border-violet-200 rounded-xl p-5 flex flex-col items-center gap-1.5 bg-violet-50 cursor-pointer hover:border-violet-400 transition-colors overflow-hidden h-32">
               {d.profPhotoMedia ? (
                 <div className="absolute inset-0 w-full h-full">
-                  <img src={d.profPhotoMedia} alt="Professional" className="w-full h-full object-cover" />
+                  <Image src={d.profPhotoMedia} alt="Professional" width={1000} height={1000} className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
                     <p className="text-white text-xs font-semibold">Change Photo</p>
                   </div>

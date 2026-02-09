@@ -73,22 +73,22 @@ export default function ProviderDetailPage() {
 
           {/* Tabs Section */}
           <Tabs defaultValue="about" className="w-full">
-            <TabsList className="bg-transparent border-b w-full justify-start rounded-none h-auto p-0 mb-8 overflow-x-auto">
+            <TabsList className="bg-transparent border-b border-gray-200 w-full justify-start rounded-none h-auto p-0 mb-8 overflow-x-hidden gap-8 scrollbar-hide">
               <TabsTrigger
                 value="about"
-                className="rounded-none border-b-2 border-transparent cursor-pointer data-[state=active]:border-primary font-bold text-base px-6 py-3"
+                className="rounded-none border-b-[3px] border-transparent cursor-pointer data-[state=active]:border-b-[#9B85C1] data-[state=active]:text-[#9B85C1] font-bold text-base px-0 py-4 shadow-none transition-all hover:text-[#9B85C1]/70 text-[#6B7280] bg-transparent data-[state=active]:bg-transparent"
               >
                 About & Bio
               </TabsTrigger>
               <TabsTrigger
                 value="specialization"
-                className="rounded-none border-b-2 border-transparent cursor-pointer data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground font-bold text-base px-6 py-3"
+                className="rounded-none border-b-[3px] border-transparent cursor-pointer data-[state=active]:border-b-[#9B85C1] data-[state=active]:text-[#9B85C1] font-bold text-base px-0 py-4 shadow-none transition-all hover:text-[#9B85C1]/70 text-[#6B7280] bg-transparent data-[state=active]:bg-transparent"
               >
                 Specialization
               </TabsTrigger>
               <TabsTrigger
                 value="availability"
-                className="rounded-none border-b-2 cursor-pointer data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground font-bold text-base px-6 py-3"
+                className="rounded-none border-b-[3px] border-transparent cursor-pointer data-[state=active]:border-b-[#9B85C1] data-[state=active]:text-[#9B85C1] font-bold text-base px-0 py-4 shadow-none transition-all hover:text-[#9B85C1]/70 text-[#6B7280] bg-transparent data-[state=active]:bg-transparent"
               >
                 Availability
               </TabsTrigger>

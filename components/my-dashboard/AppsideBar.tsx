@@ -82,7 +82,7 @@ const providerMenuItems: MenuItem[] = [
 export default function AppSideBar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { state } = useSidebar();
+  const { state, isMobile, setOpenMobile } = useSidebar();
   const isCollapsed = state === "collapsed";
   const [openItems, setOpenItems] = useState<string[]>([]);
 
@@ -91,14 +91,20 @@ export default function AppSideBar() {
 
   // Initialize open items based on current path
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
     if (isProviderPath) {
       const activeItem = providerMenuItems.find(item =>
         item.children?.some(child => pathname.startsWith(child.path))
       );
       if (activeItem) {
-        setOpenItems([activeItem.name]);
+        timeoutId = setTimeout(() => {
+          setOpenItems(prev => prev.includes(activeItem.name) ? prev : [...prev, activeItem.name]);
+        }, 0);
       }
     }
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, [pathname, isProviderPath]);
 
   const toggleItem = (name: string) => {
@@ -113,6 +119,13 @@ export default function AppSideBar() {
       return pathname === path;
     }
     return pathname === path || pathname.startsWith(`${path}/`);
+  };
+
+  // Close mobile sidebar when link is clicked
+  const handleLinkClick = () => {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
   };
 
   const handleLogout = () => {
@@ -164,7 +177,7 @@ export default function AppSideBar() {
                               {!isCollapsed && <span>{item.name}</span>}
                             </div>
                           ) : (
-                            <Link href={item.path} className={cn("flex items-center gap-4 text-base", isCollapsed && "justify-center")}>
+                            <Link href={item.path} onClick={handleLinkClick} className={cn("flex items-center gap-4 text-base", isCollapsed && "justify-center")}>
                               <item.icon className="w-5 h-5 shrink-0" strokeWidth={1.5} />
                               {!isCollapsed && <span>{item.name}</span>}
                             </Link>
@@ -191,7 +204,7 @@ export default function AppSideBar() {
                             {item.children?.map((child) => (
                               <SidebarMenuSubItem key={child.name}>
                                 <SidebarMenuSubButton asChild className="h-10 hover:bg-white/10 rounded-none px-4">
-                                  <Link href={child.path} className="flex items-center gap-3">
+                                  <Link href={child.path} onClick={handleLinkClick} className="flex items-center gap-3">
                                     <div className={cn(
                                       "w-2 h-2 rounded-full border border-white/50 bg-transparent shrink-0",
                                       pathname === child.path && "border-white bg-white"

@@ -6,10 +6,12 @@ import StepFour from "@/components/auth/clientDocument/StepFour";
 import StepOne from "@/components/auth/clientDocument/StepOne";
 import StepThree from "@/components/auth/clientDocument/StepThree";
 import StepTwo from "@/components/auth/clientDocument/StepTwo";
+import { ClientIntakeFormData } from "@/components/auth/clientDocument/types";
 import {
   ArrowLeft,
   Check
 } from "lucide-react";
+import { useRouter } from 'next/navigation';
 import { useState } from "react";
 
 /* ─────────────────────── Progress bar ──────────────────────────────────── */
@@ -43,15 +45,17 @@ function ProgressBar({ current }: { current: number }) {
 }
 
 /* ─────────────────────── MAIN FORM ─────────────────────────────────────── */
-const INITIAL = {
+const INITIAL: ClientIntakeFormData = {
   // Step 1
   name: "", email: "", phone: "", dob: "", gender: "", language: "English",
   ecName: "", ecPhone: "", ecRel: "",
   street: "", city: "", zip: "", country: "",
+  profilePhoto: null,
   // Step 2
   thGender: "", thType: "", sessionFmt: "", approach: "", frequency: "",
   // Step 3
   insProvider: "", memberId: "", groupNum: "", payment: "",
+  insCardPhoto: null,
   // Step 4
   physician: "", physPhone: "", meds: "", diagnoses: "", pastTherapy: "",
   // Step 5
@@ -60,9 +64,10 @@ const INITIAL = {
 
 export default function ClientIntakeForm() {
   const [step, setStep] = useState(0);
-  const [data, setData] = useState(INITIAL);
+  const [data, setData] = useState<ClientIntakeFormData>(INITIAL);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
+  const router = useRouter();
 
   const validateStep = (s: number) => {
     const newErrors: Record<string, string> = {};
@@ -131,10 +136,10 @@ export default function ClientIntakeForm() {
             Thank you, {data.name || "client"}. Your intake form has been received. A therapist will be matched to you shortly.
           </p>
           <button
-            onClick={() => { setSubmitted(false); setStep(0); setData(INITIAL); setErrors({}); }}
+            onClick={() => router.push("/my-dashboard")}
             className="bg-primary text-white text-sm font-semibold px-6 py-2.5 rounded-lg hover:bg-primary/80 transition-colors cursor-pointer"
           >
-            Start Over
+            Go to Dashboard
           </button>
         </div>
       </div>

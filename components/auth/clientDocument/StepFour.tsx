@@ -2,15 +2,22 @@
 
 import { Input, Label, SectionHeader, Textarea } from "./FormPrimitives";
 
-export default function StepFour({ data, setData, errors }: { data: any, setData: any, errors: Record<string, string> }) {
-  const set = (key: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setData((d: any) => ({ ...d, [key]: e.target.value }));
+import { ClientIntakeFormData } from "./types";
+
+export default function StepFour({ data, setData, errors }: {
+  data: ClientIntakeFormData;
+  setData: React.Dispatch<React.SetStateAction<ClientIntakeFormData>>;
+  errors: Record<string, string>;
+}) {
+  const set = (key: keyof ClientIntakeFormData) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setData((d) => ({ ...d, [key]: e.target.value }));
   return (
     <div key="health">
       <SectionHeader>Medical History</SectionHeader>
       <div className="bg-gray-50 rounded-xl border border-gray-100 p-4 mb-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
           <div><Label>Primary Physician Name</Label><Input value={data.physician} onChange={set("physician")} placeholder="Dr. Jane Smith" error={errors.physician} /></div>
-          <div><Label>Physician Phone Number</Label><Input value={data.physPhone} onChange={set("physPhone")} placeholder="(555) 000-0000" error={errors.physPhone} /></div>
+          <div><Label>Physician Phone Number</Label><Input type='number' value={data.physPhone} onChange={set("physPhone")} placeholder="(555) 000-0000" error={errors.physPhone} /></div>
         </div>
         <div>
           <Label>Current Medications</Label>

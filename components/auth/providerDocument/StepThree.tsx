@@ -9,13 +9,19 @@ import {
   SESSION_OPTIONS
 } from "./FormPrimitives";
 
-export default function StepThree({ d, s, errors }: { d: any, s: any, errors: Record<string, string> }) {
+import { ProviderIntakeFormData } from "./types";
+
+export default function StepThree({ d, s, errors }: {
+  d: ProviderIntakeFormData;
+  s: React.Dispatch<React.SetStateAction<ProviderIntakeFormData>>;
+  errors: Record<string, string>;
+}) {
   /* ── Therapeutic Approaches (pill-chip multi-select + Add Other) ── */
   const toggleApproach = (a: string) => {
     const cur = d.approaches || [];
-    s((p: any) => ({
+    s((p) => ({
       ...p,
-      approaches: cur.includes(a) ? cur.filter((x: string) => x !== a) : [...cur, a],
+      approaches: cur.includes(a) ? cur.filter((x) => x !== a) : [...cur, a],
     }));
   };
 
@@ -25,7 +31,7 @@ export default function StepThree({ d, s, errors }: { d: any, s: any, errors: Re
 
   const commitOther = () => {
     if (otherVal.trim()) {
-      s((p: any) => ({ ...p, approaches: [...(p.approaches || []), otherVal.trim()] }));
+      s((p) => ({ ...p, approaches: [...(p.approaches || []), otherVal.trim()] }));
     }
     setOtherVal("");
     setAddingOther(false);
@@ -34,18 +40,18 @@ export default function StepThree({ d, s, errors }: { d: any, s: any, errors: Re
   /* ── Populations grid (two-col checkboxes) ── */
   const togglePop = (p_val: string) => {
     const cur = d.populations || [];
-    s((prev: any) => ({
+    s((prev) => ({
       ...prev,
-      populations: cur.includes(p_val) ? cur.filter((x: string) => x !== p_val) : [...cur, p_val],
+      populations: cur.includes(p_val) ? cur.filter((x) => x !== p_val) : [...cur, p_val],
     }));
   };
 
   /* ── Session / Other grid ── */
   const toggleSession = (o: string) => {
     const cur = d.sessions || [];
-    s((prev: any) => ({
+    s((prev) => ({
       ...prev,
-      sessions: cur.includes(o) ? cur.filter((x: string) => x !== o) : [...cur, o],
+      sessions: cur.includes(o) ? cur.filter((x) => x !== o) : [...cur, o],
     }));
   };
 

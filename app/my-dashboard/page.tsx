@@ -43,7 +43,7 @@ const notifications = [
 
 export default function DashboardPage() {
   return (
-    <div className="space-y-6 sm:space-y-8 py-2 sm:py-4 px-1 sm:px-0">
+    <div className="space-y-6 sm:space-y-8 py-0 sm:py-4 sm:px-0">
 
       {/* Top Action Buttons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 items-center p-4 sm:p-5 bg-white rounded-2xl shadow-sm border border-gray-100">

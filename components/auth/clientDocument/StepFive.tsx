@@ -2,8 +2,15 @@
 
 import { Label, Textarea } from "./FormPrimitives";
 
-export default function StepFive({ data, setData, errors }: { data: any, setData: any, errors: Record<string, string> }) {
-  const set = (key: string) => (e: React.ChangeEvent<HTMLTextAreaElement>) => setData((d: any) => ({ ...d, [key]: e.target.value }));
+import { ClientIntakeFormData } from "./types";
+
+export default function StepFive({ data, setData, errors }: {
+  data: ClientIntakeFormData;
+  setData: React.Dispatch<React.SetStateAction<ClientIntakeFormData>>;
+  errors: Record<string, string>;
+}) {
+  const set = (key: keyof ClientIntakeFormData) => (e: React.ChangeEvent<HTMLTextAreaElement>) =>
+    setData((d) => ({ ...d, [key]: e.target.value }));
   return (
     <div key="concerns">
       <div className="bg-gray-50 rounded-xl border border-gray-100 p-4 mb-5">

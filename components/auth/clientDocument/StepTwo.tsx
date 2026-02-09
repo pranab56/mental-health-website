@@ -2,7 +2,13 @@
 
 import { cn, Label, SelectDropdown } from "./FormPrimitives";
 
-export default function StepTwo({ data, setData, errors }: { data: any, setData: any, errors: Record<string, string> }) {
+import { ClientIntakeFormData } from "./types";
+
+export default function StepTwo({ data, setData, errors }: {
+  data: ClientIntakeFormData;
+  setData: React.Dispatch<React.SetStateAction<ClientIntakeFormData>>;
+  errors: Record<string, string>;
+}) {
   const genders = ["Male", "Female", "Other", "No Preference"];
   const therapyTypes = [
     { key: "Individual", sub: "For myself" },
@@ -28,7 +34,7 @@ export default function StepTwo({ data, setData, errors }: { data: any, setData:
             <button
               key={g}
               type="button"
-              onClick={() => setData((d: any) => ({ ...d, thGender: g }))}
+              onClick={() => setData((d) => ({ ...d, thGender: g }))}
               className={cn(
                 "rounded-xl border p-3 flex flex-col items-center gap-1.5 text-xs font-medium transition-all duration-200",
                 data.thGender === g
@@ -54,7 +60,7 @@ export default function StepTwo({ data, setData, errors }: { data: any, setData:
             <button
               key={t.key}
               type="button"
-              onClick={() => setData((d: any) => ({ ...d, thType: t.key }))}
+              onClick={() => setData((d) => ({ ...d, thType: t.key }))}
               className={cn(
                 "rounded-xl border p-3 flex flex-col items-center gap-1 text-xs font-medium transition-all duration-200",
                 data.thType === t.key
@@ -77,16 +83,16 @@ export default function StepTwo({ data, setData, errors }: { data: any, setData:
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
         <div>
           <Label>Session Format</Label>
-          <SelectDropdown value={data.sessionFmt} onChange={(v) => setData((d: any) => ({ ...d, sessionFmt: v }))} placeholder="Online (Video call)" options={["Online (Video call)", "In-Person", "Phone Call", "Hybrid"]} error={errors.sessionFmt} />
+          <SelectDropdown value={data.sessionFmt} onChange={(v) => setData((d) => ({ ...d, sessionFmt: v }))} placeholder="Online (Video call)" options={["Online (Video call)", "In-Person", "Phone Call", "Hybrid"]} error={errors.sessionFmt} />
         </div>
         <div>
           <Label>Preferred Approach</Label>
-          <SelectDropdown value={data.approach} onChange={(v) => setData((d: any) => ({ ...d, approach: v }))} placeholder="No Preference / Let therapist decide" options={["No Preference / Let therapist decide", "CBT", "DBT", "Psychodynamic", "Humanistic", "EMDR"]} error={errors.approach} />
+          <SelectDropdown value={data.approach} onChange={(v) => setData((d) => ({ ...d, approach: v }))} placeholder="No Preference / Let therapist decide" options={["No Preference / Let therapist decide", "CBT", "DBT", "Psychodynamic", "Humanistic", "EMDR"]} error={errors.approach} />
         </div>
       </div>
       <div className="mt-4">
         <Label>Session Frequency</Label>
-        <SelectDropdown value={data.frequency} onChange={(v) => setData((d: any) => ({ ...d, frequency: v }))} placeholder="Online" options={["Online", "Weekly", "Bi-weekly", "Monthly"]} error={errors.frequency} />
+        <SelectDropdown value={data.frequency} onChange={(v) => setData((d) => ({ ...d, frequency: v }))} placeholder="Online" options={["Online", "Weekly", "Bi-weekly", "Monthly"]} error={errors.frequency} />
       </div>
     </div>
   );

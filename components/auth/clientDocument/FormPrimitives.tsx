@@ -1,6 +1,8 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { CalendarIcon, ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 /* ─────────────────────── Tiny shadcn‑style helpers ─────────────────────── */
@@ -40,7 +42,7 @@ export function Input({
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type?: string;
   className?: string;
-  icon?: any;
+  icon?: React.ElementType;
   error?: string;
 }) {
   return (
@@ -158,4 +160,57 @@ export function SelectDropdown({
 
 export function SectionHeader({ children }: { children: React.ReactNode }) {
   return <p className="text-sm font-bold text-gray-800 mb-3">{children}</p>;
+}
+
+
+
+export function DatePicker({
+  value,
+  onChange,
+  placeholder,
+  error
+}: {
+  value: string;
+  onChange: (date: string) => void;
+  placeholder: string;
+  error?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const dateValue = value ? new Date(value) : undefined;
+
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className={cn(
+          "w-full flex items-center justify-between rounded-lg border bg-white px-3 py-2.5 text-sm transition-all focus:outline-none focus:ring-2",
+          error
+            ? "border-red-400 focus:ring-red-100 focus:border-red-500"
+            : "border-gray-200 focus:ring-violet-200 focus:border-violet-400"
+        )}
+      >
+        <span className={value ? "text-gray-700" : "text-gray-400"}>
+          {value ? format(dateValue!, "PPP") : placeholder}
+        </span>
+        <CalendarIcon size={15} className="text-gray-400" />
+      </button>
+      {open && (
+        <div className="absolute z-30 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg p-2 origin-top-left">
+          <Calendar
+            mode="single"
+            selected={dateValue}
+            onSelect={(date) => {
+              if (date) {
+                onChange(date.toISOString());
+                setOpen(false);
+              }
+            }}
+            initialFocus
+          />
+        </div>
+      )}
+      <ErrorMessage message={error} />
+    </div>
+  );
 }

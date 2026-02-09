@@ -10,15 +10,22 @@ import {
   Textarea
 } from "./FormPrimitives";
 
-export default function StepTwo({ d, s, errors }: { d: any, s: any, errors: Record<string, string> }) {
-  const u = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => s((p: any) => ({ ...p, [k]: e.target.value }));
+import { ProviderIntakeFormData } from "./types";
 
-  const handleFileChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+export default function StepTwo({ d, s, errors }: {
+  d: ProviderIntakeFormData;
+  s: React.Dispatch<React.SetStateAction<ProviderIntakeFormData>>;
+  errors: Record<string, string>;
+}) {
+  const u = (k: keyof ProviderIntakeFormData) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    s((p) => ({ ...p, [k]: e.target.value }));
+
+  const handleFileChange = (field: "cvFile" | "licenseFile") => (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        s((p: any) => ({ ...p, [field]: { name: file.name, data: reader.result } }));
+        s((p) => ({ ...p, [field]: { name: file.name, data: reader.result } }));
       };
       reader.readAsDataURL(file);
     }
@@ -33,7 +40,7 @@ export default function StepTwo({ d, s, errors }: { d: any, s: any, errors: Reco
           <div><Label>University Name</Label><Input value={d.university || ""} onChange={u("university")} placeholder="e.g. Stanford University" /></div>
         </div>
         <Label>Graduation Year</Label>
-        <Dropdown value={d.gradYear} onChange={(v) => s((p: any) => ({ ...p, gradYear: v }))} placeholder="Select Year" options={GRAD_YEARS} error={errors.gradYear} />
+        <Dropdown value={d.gradYear || ""} onChange={(v) => s((p) => ({ ...p, gradYear: v }))} placeholder="Select Year" options={GRAD_YEARS} error={errors.gradYear} />
       </Section>
 
       {/* Affiliations & Certifications */}
