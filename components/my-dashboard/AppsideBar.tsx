@@ -129,7 +129,7 @@ export default function AppSideBar() {
   };
 
   const handleLogout = () => {
-    router.push("/logout");
+    router.push("/login");
   };
 
   return (

@@ -50,8 +50,16 @@ export default function LoginPage() {
     // Simulate login delay
     setTimeout(() => {
       setIsLoading(false);
-      toast.success('Login successful!');
-      router.push('/');
+      if(email === 'my@gmail.com' && password === 'hello123') {
+        toast.success('Login successful!');
+        router.push('/my-dashboard');
+      } else if(email === 'provider@gmail.com' && password === 'hello123') {
+        toast.success('Login successful!');
+        router.push('/provider');
+      } 
+      else {
+        toast.error('Invalid email or password!');
+      }
     }, 1500);
   };
 
