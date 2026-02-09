@@ -15,16 +15,18 @@ import { Slider } from "@/components/ui/slider";
 import { DollarSign, Filter, Languages as LanguageIcon, Search, User, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 
+interface Filters {
+  therapyType: string;
+  gender: string;
+  languages: string[];
+  priceRange: number[];
+}
+
 interface SearchFiltersProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
-  filters: {
-    therapyType: string;
-    gender: string;
-    languages: string[];
-    priceRange: number[];
-  };
-  onFiltersChange: (filters: any) => void;
+  filters: Filters;
+  onFiltersChange: (filters: Filters) => void;
 }
 
 export function SearchFilters({
