@@ -91,20 +91,28 @@ export default function ProviderIntakeForm() {
     const err: Record<string, string> = {};
     if (s === 0) {
       if (!d.name) err.name = "Full name is required";
-      if (!d.email) err.email = "Email is required";
-      if (!d.phone) err.phone = "Phone is required";
-      if (!d.dob) err.dob = "DOB is required";
-      if (!d.gender) err.gender = "Gender is required";
+      if (!d.email) {
+        err.email = "Email is required";
+      } else if (!/^\S+@\S+\.\S+$/.test(d.email)) {
+        err.email = "Invalid email format";
+      }
+      if (!d.phone) err.phone = "Phone number is required";
+      if (!d.dob) err.dob = "Date of birth is required";
+      if (!d.gender) err.gender = "Gender identity is required";
       if (!d.office) err.office = "Office address is required";
+      if (!d.profilePhoto) err.profilePhoto = "Profile photo is required";
     } else if (s === 1) {
       if (!d.degree) err.degree = "Degree is required";
+      if (!d.university) err.university = "University name is required";
       if (!d.gradYear) err.gradYear = "Graduation year is required";
       if (!d.license) err.license = "License number is required";
-      if (!d.state) err.state = "State is required";
+      if (!d.state) err.state = "State of licensure is required";
       if (!d.type) err.type = "Provider type is required";
+      if (!d.cvFile) err.cvFile = "CV upload is required";
+      if (!d.licenseFile) err.licenseFile = "Licensure document is required";
     } else if (s === 2) {
-      if (!d.approaches?.length) err.approaches = "Select at least one approach";
-      if (!d.populations?.length) err.populations = "Select at least one population";
+      if (!d.approaches?.length) err.approaches = "Select at least one therapeutic approach";
+      if (!d.populations?.length) err.populations = "Select at least one client population";
       if (!d.sessions?.length) err.sessions = "Select at least one session option";
     }
     setErrors(err);

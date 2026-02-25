@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import {
   APPROACHES,
   cn,
+  ErrorMessage,
   POPULATIONS,
   Section,
   SESSION_OPTIONS
@@ -120,7 +121,7 @@ export default function StepThree({ d, s, errors }: {
             </div>
           )}
         </div>
-        {errors.approaches && <p className="text-[10px] text-red-500 mt-3 font-medium">{errors.approaches}</p>}
+        <ErrorMessage message={errors.approaches} />
       </Section>
 
       {/* Client Population */}
@@ -155,7 +156,7 @@ export default function StepThree({ d, s, errors }: {
             );
           })}
         </div>
-        {errors.populations && <p className="text-[10px] text-red-500 mt-2 font-medium">{errors.populations}</p>}
+        <ErrorMessage message={errors.populations} />
       </Section>
 
       {/* Other – session format / lengths */}
@@ -187,7 +188,7 @@ export default function StepThree({ d, s, errors }: {
             );
           })}
         </div>
-        {errors.sessions && <p className="text-[10px] text-red-500 mt-2 font-medium">{errors.sessions}</p>}
+        <ErrorMessage message={errors.sessions} />
       </Section>
     </div>
   );

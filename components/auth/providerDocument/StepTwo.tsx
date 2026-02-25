@@ -1,12 +1,16 @@
 "use client";
 
 import {
+  cn,
   DocUploadIcon,
   Dropdown,
+  ErrorMessage,
   GRAD_YEARS,
   Input,
   Label,
+  PROVIDER_TYPES,
   Section,
+  STATE_LIST,
   Textarea
 } from "./FormPrimitives";
 
@@ -37,10 +41,28 @@ export default function StepTwo({ d, s, errors }: {
       <Section title="Academic History">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
           <div><Label>Degree Name</Label><Input value={d.degree || ""} onChange={u("degree")} placeholder="e.g. Master of Psychology" error={errors.degree} /></div>
-          <div><Label>University Name</Label><Input value={d.university || ""} onChange={u("university")} placeholder="e.g. Stanford University" /></div>
+          <div><Label>University Name</Label><Input value={d.university || ""} onChange={u("university")} placeholder="e.g. Stanford University" error={errors.university} /></div>
         </div>
         <Label>Graduation Year</Label>
         <Dropdown value={d.gradYear || ""} onChange={(v) => s((p) => ({ ...p, gradYear: v }))} placeholder="Select Year" options={GRAD_YEARS} error={errors.gradYear} />
+      </Section>
+
+      {/* Professional Credentials */}
+      <Section title="Professional Credentials">
+        <div className="mb-4">
+          <Label>License Number</Label>
+          <Input value={d.license || ""} onChange={u("license")} placeholder="e.g. PSY123456" error={errors.license} />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <Label>State of Licensure</Label>
+            <Dropdown value={d.state || ""} onChange={(v) => s((p) => ({ ...p, state: v }))} placeholder="Select State" options={STATE_LIST} error={errors.state} />
+          </div>
+          <div>
+            <Label>Provider Type</Label>
+            <Dropdown value={d.type || ""} onChange={(v) => s((p) => ({ ...p, type: v }))} placeholder="Select Type" options={PROVIDER_TYPES} error={errors.type} />
+          </div>
+        </div>
       </Section>
 
       {/* Affiliations & Certifications */}
@@ -82,7 +104,10 @@ export default function StepTwo({ d, s, errors }: {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label>CV Upload</Label>
-            <label className="relative block border-2 border-dashed border-violet-200 rounded-xl p-5 flex flex-col items-center gap-1.5 bg-violet-50 cursor-pointer hover:border-violet-400 transition-colors h-32 justify-center">
+            <label className={cn(
+              "relative block border-2 border-dashed rounded-xl p-5 flex flex-col items-center gap-1.5 cursor-pointer transition-colors h-32 justify-center",
+              errors.cvFile ? "border-red-400 bg-red-50 hover:border-red-500" : "border-violet-200 bg-violet-50 hover:border-violet-400"
+            )}>
               {d.cvFile ? (
                 <div className="text-center">
                   <div className="bg-violet-100 p-2 rounded-lg inline-block mb-1">
@@ -99,10 +124,14 @@ export default function StepTwo({ d, s, errors }: {
               )}
               <input type="file" className="hidden" accept=".pdf,.doc,.docx" onChange={handleFileChange("cvFile")} />
             </label>
+            <ErrorMessage message={errors.cvFile} />
           </div>
           <div>
             <Label>Licensure Upload</Label>
-            <label className="relative block border-2 border-dashed border-violet-200 rounded-xl p-5 flex flex-col items-center gap-1.5 bg-violet-50 cursor-pointer hover:border-violet-400 transition-colors h-32 justify-center">
+            <label className={cn(
+              "relative block border-2 border-dashed rounded-xl p-5 flex flex-col items-center gap-1.5 cursor-pointer transition-colors h-32 justify-center",
+              errors.licenseFile ? "border-red-400 bg-red-50 hover:border-red-500" : "border-violet-200 bg-violet-50 hover:border-violet-400"
+            )}>
               {d.licenseFile ? (
                 <div className="text-center">
                   <div className="bg-violet-100 p-2 rounded-lg inline-block mb-1">
@@ -119,9 +148,11 @@ export default function StepTwo({ d, s, errors }: {
               )}
               <input type="file" className="hidden" accept=".pdf,image/*" onChange={handleFileChange("licenseFile")} />
             </label>
+            <ErrorMessage message={errors.licenseFile} />
           </div>
         </div>
       </Section>
+
     </div>
   );
 }

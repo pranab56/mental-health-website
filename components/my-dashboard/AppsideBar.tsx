@@ -76,6 +76,7 @@ const providerMenuItems: MenuItem[] = [
   { name: "Availability", path: "/provider/availability", icon: ClockAlert },
   { name: "Billing", path: "/provider/billing", icon: Receipt },
   { name: "Messages", path: "/provider/messages", icon: MessageSquare },
+  { name: "Form Library", path: "/provider/form-library", icon: MessageSquare },
   { name: "Profile", path: "/provider/profile", icon: User },
 ];
 

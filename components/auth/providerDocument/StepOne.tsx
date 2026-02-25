@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import {
   Dropdown,
+  ErrorMessage,
   Input,
   Label,
   Section,
@@ -39,7 +40,7 @@ export default function StepOne({ d, s, errors }: {
           {d.profilePhoto ? (
             <Image src={d.profilePhoto} alt="Profile" width={1000} height={1000} className="w-full h-full object-cover" />
           ) : (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="1.8">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="  #9ca3af" strokeWidth="1.8">
               <circle cx="12" cy="8" r="4" />
               <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
             </svg>
@@ -63,6 +64,7 @@ export default function StepOne({ d, s, errors }: {
               </button>
             )}
           </div>
+          <ErrorMessage message={errors.profilePhoto} />
         </div>
       </div>
 

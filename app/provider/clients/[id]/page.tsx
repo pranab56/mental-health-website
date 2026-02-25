@@ -186,9 +186,9 @@ export default function ClientProfilePage({ params }: { params: Promise<{ id: st
         <div className="space-y-8">
           {/* Demographics */}
           <motion.div variants={itemVariants}>
-            <h2 className="text-2xl font-bold text-[#1e293b] mb-6">Demographics</h2>
             <Card className="border-none shadow-sm bg-white">
-              <CardContent className="p-5 sm:p-8 space-y-6 sm:space-y-8">
+              <CardContent className="p-5 sm:p-4 space-y-6 sm:space-y-8">
+            <h2 className="text-2xl font-bold text-[#1e293b] mb-6">Demographics</h2>
                 {[
                   { label: "Age", value: "32 Years" },
                   { label: "Gender Identity", value: "Female" },
@@ -206,9 +206,9 @@ export default function ClientProfilePage({ params }: { params: Promise<{ id: st
 
           {/* Care Team */}
           <motion.div variants={itemVariants}>
-            <h2 className="text-2xl font-bold text-[#1e293b] mb-6">Care Team</h2>
             <Card className="border-none shadow-sm bg-white">
-              <CardContent className="p-5 sm:p-8 space-y-6 sm:space-y-8">
+              <CardContent className="p-5 sm:p-4 space-y-6 sm:space-y-8">
+                <h2 className="text-2xl font-bold text-[#1e293b] mb-6">Care Team</h2>
                 {careTeam.map((member) => (
                   <div key={member.id} className="flex items-center gap-3 sm:gap-4">
                     <div className="p-2 sm:p-3 bg-[#EDF7F7] rounded-xl text-[#6BB9BA] shrink-0">
@@ -220,6 +220,19 @@ export default function ClientProfilePage({ params }: { params: Promise<{ id: st
                     </div>
                   </div>
                 ))}
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          <motion.div variants={itemVariants}>
+            <Card className="border-none shadow-sm bg-white">
+              <CardContent className="p-5 sm:p-4 space-y-6 sm:space-y-8">
+                <h2 className="text-2xl font-bold text-[#1e293b] mb-6">Quick Note</h2>
+                <p className="text-slate-500 text-base sm:text-lg leading-relaxed">Client responded well to CBT exercises during the last session. Focus on cognitive restructuring next week.</p>
+               <div className='flex flex-col gap-3'>
+                 <Button className="bg-[#9B8AC7] hover:bg-[#9B8AC7]/80 text-white font-bold py-2.5 px-4 rounded-lg">Add Note</Button>
+                <Button className="border bg-white hover:bg-white  border-[#EDF7F7] text-gray-700 font-medium py-2.5 px-4 rounded-lg">View All Notes</Button>
+               </div>
               </CardContent>
             </Card>
           </motion.div>
